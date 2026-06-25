@@ -15,9 +15,9 @@ import Logo from "../logo";
 import NavLinks from "../navLinks";
 export default function Header() {
   return (
-    <header className="border-b hidden md:block border-border w-full px-2 sticky top-0 bg-background z-50">
+    <header className="border-b hidden backdrop-blur-lg  md:block border-border w-full px-2 sticky top-0 bg-background/20 z-50">
       <div className="max-w-7xl h-14 flex items-center mx-auto justify-between">
-        <Logo />
+        <Logo variant="small" />
         <div className="flex items-center gap-x-6 ">
           <NavLinks />
           <DropdownMenu>
@@ -52,11 +52,9 @@ export default function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href={"/cart"} className="flex items-center gap-x-2">
-                    <LogOut className="text-muted-foreground" />
-                    sign out
-                  </Link>
+                <DropdownMenuItem >
+                  <LogOut className="text-muted-foreground" />
+                  sign out
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

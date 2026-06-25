@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  // پاک کردن دیتای قبلی، تا هر بار seed زدن دوباره با خطای unique مواجه نشی
+  // Clear existing data so re-running seed doesn't hit unique constraint errors
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.cartItem.deleteMany();
@@ -12,7 +12,7 @@ async function main() {
   await prisma.category.deleteMany();
   await prisma.user.deleteMany();
 
-  // کاربرها (پسورد هش می‌شه چون بعداً NextAuth باید بتونه چکش کنه)
+  // Users (password is hashed since NextAuth will need to verify it later)
   const hashedPassword = await bcrypt.hash("123456", 10);
 
   const admin = await prisma.user.create({
@@ -20,88 +20,91 @@ async function main() {
       fullName: "Admin User",
       email: "admin@test.com",
       password: hashedPassword,
-      phone: "09120000000",
+      phone: "+1 212 555 0100",
       role: "ADMIN",
     },
   });
 
   const user = await prisma.user.create({
     data: {
-      fullName: "Ali Rezaei",
-      email: "ali@test.com",
+      fullName: "John Carter",
+      email: "john@test.com",
       password: hashedPassword,
-      phone: "09121234567",
-      address: "تهران، خیابان ولیعصر",
+      phone: "+1 212 555 0148",
+      address: "123 Main St, New York, NY 10001",
       role: "USER",
     },
   });
 
-  // دسته‌بندی‌ها (اول اینا رو می‌سازیم چون محصولات بهشون نیاز دارن)
+  // Categories (created first since products need their id)
   const chairCategory = await prisma.category.create({
-    data: { name: "صندلی", slug: "chairs" },
+    data: { name: "Chairs", slug: "chairs" },
   });
 
   const sofaCategory = await prisma.category.create({
-    data: { name: "مبل", slug: "sofas" },
+    data: { name: "Sofas", slug: "sofas" },
   });
 
   const tableCategory = await prisma.category.create({
-    data: { name: "میز", slug: "tables" },
+    data: { name: "Tables", slug: "tables" },
   });
 
-  // محصولات
+  // Products
   await prisma.product.createMany({
     data: [
       {
-        name: "صندلی چوبی کلاسیک",
+        name: "Classic Wooden Chair",
         slug: "classic-wooden-chair",
-        description: "صندلی چوبی با طراحی کلاسیک و راحت، مناسب برای فضای نشیمن.",
-        price: 1250000,
+        description:
+          "A classic wooden chair with a comfortable design, perfect for the living room.",
+        price: 129.99,
         stock: 15,
         images: ["https://picsum.photos/seed/chair1/600/600"],
         categoryId: chairCategory.id,
       },
       {
-        name: "صندلی اداری ارگونومیک",
+        name: "Ergonomic Office Chair",
         slug: "ergonomic-office-chair",
-        description: "صندلی اداری با پشتی قابل تنظیم برای ساعت‌های طولانی کار.",
-        price: 3400000,
+        description:
+          "An office chair with an adjustable backrest, built for long work hours.",
+        price: 249.99,
         stock: 8,
         images: ["https://picsum.photos/seed/chair2/600/600"],
         categoryId: chairCategory.id,
       },
       {
-        name: "مبل ال شکل مدرن",
+        name: "Modern L-Shaped Sofa",
         slug: "modern-l-shaped-sofa",
-        description: "مبل ال شکل با پارچه مرغوب و طراحی مینیمال.",
-        price: 18500000,
+        description:
+          "An L-shaped sofa with premium fabric and a minimal, modern design.",
+        price: 899.99,
         stock: 4,
         images: ["https://picsum.photos/seed/sofa1/600/600"],
         categoryId: sofaCategory.id,
       },
       {
-        name: "مبل دو نفره چستر",
+        name: "Chesterfield Loveseat",
         slug: "chesterfield-loveseat",
-        description: "مبل دو نفره چستر با چرم مصنوعی درجه یک.",
-        price: 12900000,
+        description: "A two-seat Chesterfield sofa in premium faux leather.",
+        price: 649.99,
         stock: 6,
         images: ["https://picsum.photos/seed/sofa2/600/600"],
         categoryId: sofaCategory.id,
       },
       {
-        name: "میز ناهارخوری چوبی",
+        name: "Wooden Dining Table",
         slug: "wooden-dining-table",
-        description: "میز ناهارخوری ۶ نفره از چوب طبیعی گردو.",
-        price: 9800000,
+        description: "A 6-seater dining table made from solid walnut wood.",
+        price: 499.99,
         stock: 5,
         images: ["https://picsum.photos/seed/table1/600/600"],
         categoryId: tableCategory.id,
       },
       {
-        name: "میز جلو مبلی شیشه‌ای",
+        name: "Glass Coffee Table",
         slug: "glass-coffee-table",
-        description: "میز جلو مبلی با رویه شیشه‌ای و پایه فلزی.",
-        price: 4200000,
+        description: "A coffee table with a glass top and a metal frame.",
+        price: 199.99,
         stock: 10,
         images: ["https://picsum.photos/seed/table2/600/600"],
         categoryId: tableCategory.id,
@@ -109,10 +112,10 @@ async function main() {
     ],
   });
 
-  // برای ساخت سبد خرید و سفارش، id محصولات واقعی رو می‌گیریم
+  // Fetch real product ids for the cart and order below
   const allProducts = await prisma.product.findMany();
 
-  // سبد خرید کاربر عادی
+  // Sample cart items for the regular user
   await prisma.cartItem.create({
     data: {
       userId: user.id,
@@ -129,7 +132,7 @@ async function main() {
     },
   });
 
-  // یک سفارش نمونه برای همون کاربر
+  // A sample order for the same user
   const order = await prisma.order.create({
     data: {
       userId: user.id,
@@ -152,7 +155,7 @@ async function main() {
     },
   });
 
-  console.log("✅ Seed با موفقیت تکمیل شد");
+  console.log("✅ Seed completed successfully");
   console.log({
     admin: admin.email,
     user: user.email,

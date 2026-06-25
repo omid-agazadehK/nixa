@@ -1,4 +1,5 @@
 import Header from "@/components/layout/header";
+import MobileNav from "@/components/layout/mobileNav";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,10 +17,7 @@ export default function RootLayout({
       <body className="h-500 flex flex-col ">
         <Header />
         {children}
-
-        <span className="text-2xl font-bold ">
-          hello my name is omid agazadeh and i work for master company
-        </span>
+        <MobileNav />
       </body>
     </html>
   );
