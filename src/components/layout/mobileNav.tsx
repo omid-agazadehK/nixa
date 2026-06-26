@@ -1,12 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 import {
   Ellipsis,
   House,
@@ -14,16 +14,16 @@ import {
   ShoppingBag,
   ShoppingCart,
   User,
-} from "lucide-react";
-import Link from "next/link";
-import Logo from "../logo";
+} from 'lucide-react';
+import Link from 'next/link';
+import Logo from '../logo';
 export default function MobileNav() {
   return (
-    <div className="md:hidden fixed bottom-0  w-full bg-background border-t border-border z-50">
-      <div className="grid grid-cols-4 gap-x-1 place-items-center w-full p-2 font-light text-xs">
+    <div className="bg-background border-border fixed bottom-0 z-50 w-full border-t sm:hidden">
+      <div className="grid w-full grid-cols-4 place-items-center gap-x-1 p-2 text-xs font-light">
         <Link
-          href={"/"}
-          className="col-span-1  w-full flex flex-col items-center justify-center gap-y-1  rounded-sm hover:"
+          href={'/'}
+          className="hover: col-span-1 flex w-full flex-col items-center justify-center gap-y-1 rounded-sm"
         >
           <House
             size={20}
@@ -33,8 +33,8 @@ export default function MobileNav() {
           Home
         </Link>
         <Link
-          href={"/shop"}
-          className="col-span-1  w-full flex flex-col items-center justify-center  gap-y-1 rounded-sm hover:"
+          href={'/shop'}
+          className="hover: col-span-1 flex w-full flex-col items-center justify-center gap-y-1 rounded-sm"
         >
           <ShoppingBag
             size={20}
@@ -46,7 +46,7 @@ export default function MobileNav() {
 
         <Sheet>
           <SheetTrigger>
-            <div className="col-span-1 w-full flex flex-col items-center justify-center gap-y-1 rounded-sm ">
+            <div className="col-span-1 flex w-full flex-col items-center justify-center gap-y-1 rounded-sm">
               <Ellipsis
                 size={20}
                 strokeWidth={1.5}
@@ -61,15 +61,15 @@ export default function MobileNav() {
                 <Logo variant="large" />
               </SheetTitle>
             </SheetHeader>
-            <div className="flex flex-col gap-y-3 mt-4 px-4 text-lg">
-              <Link href={"/cart"} className="flex items-center gap-x-2">
+            <div className="mt-4 flex flex-col gap-y-3 px-4 text-lg">
+              <Link href={'/cart'} className="flex items-center gap-x-2">
                 <ShoppingCart />
                 cart
               </Link>
             </div>
           </SheetContent>
         </Sheet>
-        <div className="col-span-1  h-full w-full flex flex-col items-center justify-center rounded-sm hover: ">
+        <div className="hover: col-span-1 flex h-full w-full flex-col items-center justify-center rounded-sm">
           <Sheet>
             <SheetTrigger>
               <Avatar>
@@ -92,8 +92,8 @@ export default function MobileNav() {
                       />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col ">
-                      <span className="text-foreground ">omid agazadeh</span>
+                    <div className="flex flex-col">
+                      <span className="text-foreground">omid agazadeh</span>
                       <span className="text-sm font-light">
                         omidagazadeh.dev@gmail.com
                       </span>
@@ -101,13 +101,13 @@ export default function MobileNav() {
                   </div>
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-y-3 mt-4 px-4 text-lg">
-                <Link href={"/cart"} className="flex items-center gap-x-2">
+              <div className="mt-4 flex flex-col gap-y-3 px-4 text-lg">
+                <Link href={'/cart'} className="flex items-center gap-x-2">
                   <User />
                   Account settings
                 </Link>
                 <DropdownMenuSeparator />
-                <Link href={"/cart"} className="flex items-center gap-x-2">
+                <Link href={'/cart'} className="flex items-center gap-x-2">
                   <LogOut className="text-muted-foreground" />
                   sign out
                 </Link>

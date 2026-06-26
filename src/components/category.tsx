@@ -27,26 +27,35 @@ export default function Category() {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="w-30">
-        <Button variant="outline" className="flex items-center justify-between">
-          {searchParams.get("category") ?? "all"}
-          <ChevronDown />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-56">
-        <DropdownMenuGroup>
-          <DropdownMenuRadioGroup
-            value={searchParams.get("category") ?? "newest"}
-            onValueChange={handleCategory}
+    <div className="col-span-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="w-30">
+          <Button
+            variant="outline"
+            className="flex items-center justify-between"
           >
-            <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="chairs">Chairs</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="sofas">Sofas</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="tables">Tables</DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            {searchParams.get("category") ?? "all"}
+            <ChevronDown />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="min-w-56">
+          <DropdownMenuGroup>
+            <DropdownMenuRadioGroup
+              value={searchParams.get("category") ?? "all"}
+              onValueChange={handleCategory}
+            >
+              <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="chairs">
+                Chairs
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="sofas">Sofas</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="tables">
+                Tables
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

@@ -3,6 +3,9 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+@theme {
+  --breakpoint-xs: 30rem;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -56,7 +59,7 @@
   --popover: oklch(0.9794 0.0046 78.3);
   --popover-foreground: oklch(22 15% 15%);
 
-  --primary: oklch(0.5833 0.1299 40.18);
+  --primary: oklch(0.6181 0.1751 38.96);
   --primary-foreground: oklch(0.9794 0.0046 78.3);
 
   --secondary: oklch(0.9102 0.0191 79.88);
@@ -72,20 +75,20 @@
 
   --border: oklch(0.879329 0.022171 76.5147);
   --input: oklch(0.879329 0.022171 76.5147);
-  --ring: oklch(0.5833 0.1299 40.18);
+  --ring: oklch(0.6181 0.1751 38.96);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  
+
   --sidebar: oklch(0.9794 0.0046 78.3);
   --sidebar-foreground: oklch(22 15% 15%);
-  --sidebar-primary: oklch(0.5833 0.1299 40.18);
+  --sidebar-primary: oklch(0.6181 0.1751 38.96);
   --sidebar-primary-foreground: oklch(0.9794 0.0046 78.3);
   --sidebar-accent: oklch(0.9102 0.0191 79.88);
-  --sidebar-accent-foreground: oklch(0.5833 0.1299 40.18);
+  --sidebar-accent-foreground: oklch(0.6181 0.1751 38.96);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }

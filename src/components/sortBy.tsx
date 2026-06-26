@@ -21,14 +21,14 @@ export default function SortBy() {
   }
 
   return (
-    <div className="p-5 bg-secondary shadow-sm w-fit rounded-xl h-fit flex flex-col items-start gap-y-10">
+    <div className="p-5 mt-8 bg-secondary shadow-sm md:w-fit rounded-xl h-fit flex flex-col items-start gap-y-10">
       <span className="flex items-center gap-x-2 justify-start font-semibold">
         <ArrowUpDown size={16} className="text-muted-foreground" />
         Sort By
       </span>
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="w-46">
+        <DropdownMenuTrigger asChild className="lg:w-46 md:w-36 w-full font-medium">
           <Button
             variant="outline"
             className="flex items-center justify-between"
