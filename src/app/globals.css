@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 @theme {
   --breakpoint-xs: 30rem;
+  --font-fraunces: "fraunces";
 }
 
 @theme inline {
@@ -52,79 +53,48 @@
 }
 
 :root {
-  --background: oklch(0.9794 0.0046 78.3);
-  --foreground: oklch(22 15% 15%);
-  --card: oklch(0.9794 0.0046 78.3);
-  --card-foreground: oklch(22 15% 15%);
-  --popover: oklch(0.9794 0.0046 78.3);
-  --popover-foreground: oklch(22 15% 15%);
-
-  --primary: oklch(0.6181 0.1751 38.96);
-  --primary-foreground: oklch(0.9794 0.0046 78.3);
-
-  --secondary: oklch(0.9102 0.0191 79.88);
-  --secondary-foreground: oklch(0.27 0.0134 51.94);
-
-  --muted: oklch(0.9389 0.0148 79.9);
-  --muted-foreground: oklch(0.5167 0.0204 67.35);
-
-  --accent: oklch(0.6711 0.0394 132.81);
-  --accent-foreground: oklch(0.27 0.0134 51.94);
-
-  --destructive: oklch(0.5433 0.1721 29.93);
-
-  --border: oklch(0.879329 0.022171 76.5147);
-  --input: oklch(0.879329 0.022171 76.5147);
-  --ring: oklch(0.6181 0.1751 38.96);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
 
-  --sidebar: oklch(0.9794 0.0046 78.3);
-  --sidebar-foreground: oklch(22 15% 15%);
-  --sidebar-primary: oklch(0.6181 0.1751 38.96);
-  --sidebar-primary-foreground: oklch(0.9794 0.0046 78.3);
-  --sidebar-accent: oklch(0.9102 0.0191 79.88);
-  --sidebar-accent-foreground: oklch(0.6181 0.1751 38.96);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  --background: oklch(0.985 0.01 95);
+  --foreground: oklch(0.25 0.02 90);
 
-.dark {
-  --background: oklch(22 15% 15%);
-  --foreground: oklch(0.9794 0.0046 78.3);
-  --card: oklch(0.5833 0.1299 40.18);
-  --card-foreground: oklch(0.9794 0.0046 78.3);
-  --popover: oklch(0.5833 0.1299 40.18);
-  --popover-foreground: oklch(0.9794 0.0046 78.3);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.5833 0.1299 40.18);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.9794 0.0046 78.3);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.9794 0.0046 78.3);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.5833 0.1299 40.18);
-  --sidebar-foreground: oklch(0.9794 0.0046 78.3);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.9794 0.0046 78.3);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.9794 0.0046 78.3);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.02 90);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.02 90);
+
+  --primary: oklch(0.38 0.07 75);
+  --primary-foreground: oklch(0.98 0.015 95);
+
+  --secondary: oklch(0.92 0.025 90);
+  --secondary-foreground: oklch(0.3 0.02 90);
+
+  --muted: oklch(0.93 0.02 90);
+  --muted-foreground: oklch(0.52 0.03 85);
+
+  --accent: oklch(0.64 0.16 45);
+  --accent-foreground: oklch(0.98 0.01 95);
+
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.88 0.02 90);
+  --input: oklch(0.88 0.02 90);
+  --ring: oklch(0.64 0.16 45);
+
+  --chart-1: oklch(0.55 0.12 50);
+  --chart-2: oklch(0.6 0.09 75);
+  --chart-3: oklch(0.65 0.1 110);
+  --chart-4: oklch(0.75 0.13 70);
+  --chart-5: oklch(0.45 0.05 30);
+
+  --sidebar: oklch(0.96 0.015 95);
+  --sidebar-foreground: oklch(0.25 0.02 90);
+  --sidebar-primary: oklch(0.38 0.07 75);
+  --sidebar-primary-foreground: oklch(0.98 0.015 95);
+  --sidebar-accent: oklch(0.92 0.025 90);
+  --sidebar-accent-foreground: oklch(0.3 0.02 90);
+  --sidebar-border: oklch(0.88 0.02 90);
+  --sidebar-ring: oklch(0.64 0.16 45);
 }
 
 @layer base {
@@ -136,5 +106,14 @@
   }
   html {
     @apply font-sans;
+  }
+}
+@layer components {
+  .img-overlay {
+    background: linear-gradient(
+      135deg,
+      hsl(21 38% 26% / 0.45),
+      hsl(21 38% 26% / 0.15)
+    );
   }
 }

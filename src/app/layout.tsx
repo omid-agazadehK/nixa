@@ -1,24 +1,23 @@
-import Header from "@/components/layout/header";
-import MobileNav from "@/components/layout/mobileNav";
-import { Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
 });
-
+export const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+});
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.className} h-full `}>
-      <body className="flex h-500 flex-col">
-        <Header />
+    <html lang="en" className={fraunces.variable}>
+      <body className={`${inter.className} flex min-h-screen flex-col`}>
         {children}
-        <MobileNav />
         <Toaster position="top-right" />
       </body>
     </html>

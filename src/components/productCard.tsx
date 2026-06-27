@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
       href={`/shop/${product.slug}`}
       className="xs:col-span-1 col-span-2 "
     >
-      <Card className="drop-shadow-sm h-full shadow-muted-foreground  shadow relative cursor-pointer duration-300 transition-colors border border-border hover:bg-muted/50">
+      <Card className=" h-full  relative cursor-pointer duration-300 transition-colors  hover:bg-muted/50">
         <Image
           src={product.images[0]}
           alt={product.name}
