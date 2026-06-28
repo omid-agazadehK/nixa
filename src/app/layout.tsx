@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={fraunces.variable}>
-      <body className={`${inter.className} flex min-h-screen flex-col`}>
+      <body className={`${inter.className} min-h-screen `}>
         {children}
         <Toaster position="top-right" />
       </body>

@@ -155,13 +155,7 @@ async function main() {
     },
   });
 
-  console.log('✅ Seed completed successfully');
-  console.log({
-    admin: admin.email,
-    user: user.email,
-    productsCount: allProducts.length,
-    sampleOrderId: order.id,
-  });
+  
 }
 
 main()

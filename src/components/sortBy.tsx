@@ -28,7 +28,10 @@ export default function SortBy() {
       </span>
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="lg:w-46 md:w-36 w-full font-medium">
+        <DropdownMenuTrigger
+          asChild
+          className="lg:w-46 md:w-36 w-full font-medium"
+        >
           <Button
             variant="outline"
             className="flex items-center justify-between"

@@ -1,3 +1,6 @@
+import { signUpSchema } from "@/lib/schema";
+import z from "zod";
+
 export type Product = {
   category: Category;
   categoryId: string;
@@ -25,3 +28,4 @@ export type ShopSearchParams = {
 };
 export type SortKey = 'price-asc' | 'price-desc' | 'newest';
 //
+export type SignUpFormData = z.infer<typeof signUpSchema>;
