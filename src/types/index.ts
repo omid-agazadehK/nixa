@@ -1,4 +1,4 @@
-import { signUpSchema } from "@/lib/schema";
+import { loginSchema, signUpSchema } from "@/lib/schema";
 import z from "zod";
 
 export type Product = {
@@ -17,8 +17,8 @@ export type Product = {
 export type Category = { id: string; name: string; slug: string };
 //
 export type SortOption = {
-  price?: 'asc' | 'desc';
-  createdAt?: 'desc';
+  price?: "asc" | "desc";
+  createdAt?: "desc";
 };
 //
 export type ShopSearchParams = {
@@ -26,6 +26,8 @@ export type ShopSearchParams = {
   category?: string;
   q?: string;
 };
-export type SortKey = 'price-asc' | 'price-desc' | 'newest';
+export type SortKey = "price-asc" | "price-desc" | "newest";
 //
 export type SignUpFormData = z.infer<typeof signUpSchema>;
+
+export type LoginForm = z.infer<typeof loginSchema>;

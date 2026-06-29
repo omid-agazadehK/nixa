@@ -1,5 +1,5 @@
+import Providers from "@/components/provider";
 import { Fraunces, Inter } from "next/font/google";
-import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fraunces.variable}>
       <body className={`${inter.className} min-h-screen `}>
-        {children}
-        <Toaster position="top-right" />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

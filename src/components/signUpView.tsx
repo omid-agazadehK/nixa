@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,6 +14,7 @@ import { signUpSchema } from "@/lib/schema";
 import { SignUpFormData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -93,6 +95,7 @@ export default function SignUpView() {
               placeholder="password"
               label="Password"
               autoComplete="new-password"
+              type="password"
             />
 
             <Field>
@@ -103,6 +106,14 @@ export default function SignUpView() {
           </FieldGroup>
         </form>
       </CardContent>
+      <CardFooter>
+        <span>
+          Already have an account?{" "}
+          <Link href="login" className="underline text-primary/80">
+            Log in
+          </Link>
+        </span>
+      </CardFooter>
     </Card>
   );
 }

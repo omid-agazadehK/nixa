@@ -1,21 +1,24 @@
-import { SignUpFormData } from "@/types";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "./field";
 import { Input } from "./input";
 
-export default function FormInput({
+type FormInputProps<T extends FieldValues> = {
+  control: Control<T>;
+  name: Path<T>;
+  placeholder: string;
+  label: string;
+  autoComplete: string;
+  type?: string;
+};
+
+export default function FormInput<T extends FieldValues>({
   control,
   name,
   placeholder,
   label,
   autoComplete,
-}: {
-  control: Control<SignUpFormData>;
-  name: keyof SignUpFormData;
-  placeholder: string;
-  label: string;
-  autoComplete: string;
-}) {
+  type = "text",
+}: FormInputProps<T>) {
   return (
     <Controller
       name={name}
@@ -29,6 +32,7 @@ export default function FormInput({
             aria-invalid={fieldState.invalid}
             placeholder={placeholder}
             autoComplete={autoComplete}
+            type={type}
           />
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>

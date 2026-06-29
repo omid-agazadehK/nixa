@@ -1,13 +1,26 @@
-import { ShoppingBag } from 'lucide-react';
-import Link from 'next/link';
+import { ShoppingBag } from "lucide-react";
+import Link from "next/link";
 
-export default function Logo({ variant }: { variant?: 'small' | 'large' }) {
+export default function Logo({
+  variant,
+}: {
+  variant?: "small" | "large" | "hero";
+}) {
   return (
-    <Link href={'/'} className="flex items-center justify-center gap-x-2">
-      <ShoppingBag size={variant === 'large' ? 28 : 24} />
+    <Link
+      href={"/"}
+      className="flex items-center font-fraunces justify-center gap-x-2"
+    >
+      <ShoppingBag
+        size={variant === "hero" ? 40 : variant === "large" ? 28 : 24}
+      />
       <h1
         className={
-          variant === 'large' ? 'text-xl font-bold' : 'text-lg font-semibold'
+          variant === "hero"
+            ? "text-3xl font-bold"
+            : variant === "large"
+              ? "text-xl font-bold"
+              : "text-lg font-semibold"
         }
       >
         Nexi sho
