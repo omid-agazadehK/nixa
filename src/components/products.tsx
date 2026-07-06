@@ -12,7 +12,6 @@ export default async function Products({
     "price-desc": { price: "desc" },
     newest: { createdAt: "desc" },
   };
-
   const products = await prisma.product.findMany({
     where: {
       name: searchParams.q

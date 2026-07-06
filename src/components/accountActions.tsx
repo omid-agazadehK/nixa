@@ -13,7 +13,8 @@ import {
 import { Loader2, LogOut, User } from "lucide-react";
 import type { Session } from "next-auth";
 import Link from "next/link";
-import { useTransition } from "react";
+import { MouseEvent, useTransition } from "react";
+import { toast } from "sonner";
 
 export default function AccountActions({
   user,
@@ -21,9 +22,11 @@ export default function AccountActions({
   user: NonNullable<Session["user"]>;
 }) {
   const [isPending, startTransition] = useTransition();
-  const signOutHandler = () => {
+  const signOutHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
     startTransition(async () => {
-      await logout();
+      const res = await logout();
+      if (!res.success) toast.error(res.message);
     });
   };
   return (
@@ -59,12 +62,16 @@ export default function AccountActions({
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={signOutHandler} disabled={isPending}>
+          <DropdownMenuItem
+            onClick={(e) => signOutHandler(e)}
+            disabled={isPending}
+          >
             {isPending ? (
               <Loader2 className="animate-spin text-muted-foreground" />
             ) : (
               <LogOut className="text-muted-foreground" />
             )}
+
             {isPending ? "Signing out..." : "Sign out"}
           </DropdownMenuItem>
         </DropdownMenuGroup>

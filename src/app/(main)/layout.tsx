@@ -9,7 +9,9 @@ export default function MainLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 mx-auto w-full max-w-7xl md:mt-20 px-5 sm:px-10 xl:px-0">
+        {children}
+      </main>
       <MobileNav />
     </div>
   );

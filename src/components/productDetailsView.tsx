@@ -17,15 +17,16 @@ export default async function ProductDetailsView({
 
   if (!product) notFound();
   return (
-    <section className="mx-auto w-full max-w-7xl md:mt-20">
-      <div className="flex gap-x-10">
+      <section className="flex gap-x-10">
         <div className="aspect-square w-2/3 object-cover max-w-lg overflow-hidden">
           <Image
             src={product?.images[0]}
             height={400}
             width={400}
+            loading="eager"
             className="rounded-2xl"
             alt={product.name}
+            
           />
         </div>
         <div className="flex flex-col gap-y-5 w-full">
@@ -48,7 +49,6 @@ export default async function ProductDetailsView({
           </div>
           <AddToCartButton id={product.id} />
         </div>
-      </div>
-    </section>
+      </section>
   );
 }

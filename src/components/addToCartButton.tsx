@@ -3,6 +3,7 @@ import { addToCart } from "@/actions/cart.actions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
 
 export default function AddToCartButton({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition();
@@ -11,7 +12,7 @@ export default function AddToCartButton({ id }: { id: string }) {
       try {
         const res = await addToCart(id);
         if (res) {
-          toast.success("Success");
+          toast.success(res.message);
         }
       } catch {
         toast.error("somthing went wrong");
@@ -24,7 +25,7 @@ export default function AddToCartButton({ id }: { id: string }) {
       size={"lg"}
       className="cursor-pointer max-w-50 h-16 rounded-none text-lg"
     >
-      {isPending ? "loading" : "ADD TO CART"}
+      {isPending ? <Spinner className="size-6" /> : "ADD TO CART"}
     </Button>
   );
 }

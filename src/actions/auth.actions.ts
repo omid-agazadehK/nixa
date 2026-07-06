@@ -6,6 +6,7 @@ import { loginSchema, signUpSchema } from "@/lib/schema";
 import { LoginForm, SignUpFormData } from "@/types";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export const signUp = async (formData: SignUpFormData) => {
   try {
@@ -84,5 +85,14 @@ export const logIn = async (formData: LoginForm) => {
   }
 };
 export const logout = async () => {
-  await signOut({ redirectTo: "/login" });
+  try {
+    await signOut({ redirectTo: "/login" });
+    return { success: true }; // never actually reached — signOut always redirects on success
+  } catch (err) {
+    if (isRedirectError(err)) throw err;
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
+  }
 };
