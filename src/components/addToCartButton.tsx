@@ -11,7 +11,7 @@ export default function AddToCartButton({ id }: { id: string }) {
     startTransition(async () => {
       try {
         const res = await addToCart(id);
-        if (res) {
+        if (res.success) {
           toast.success(res.message);
         }
       } catch {
