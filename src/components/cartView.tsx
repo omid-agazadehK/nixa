@@ -5,11 +5,12 @@ import OrderSummary from "./orderSummary";
 
 export default async function CartView() {
   const session = await auth();
-  const user = session?.user;
+  const userId = session?.user?.id;
 
-  const cartItems =await prisma.cartItem.findMany({
-    where: { userId: user?.id },
+  const cartItems = await prisma.cartItem.findMany({
+    where: { userId },
     include: { product: { include: { category: true } } },
+    orderBy: { createdAt: "desc" },
   });
 
   return (

@@ -37,6 +37,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+# Personal notes
+PROJECT_NOTES.md
+notes/
 
 # typescript
 *.tsbuildinfo

@@ -42,3 +42,9 @@ export type CartItemWithProduct = Prisma.CartItemGetPayload<{
     };
   };
 }>;
+export type CartControlItem = Prisma.CartItemGetPayload<{
+  select: {
+    id: true;
+    quantity: true;
+  };
+}>;

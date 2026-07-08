@@ -9,14 +9,12 @@ export default function AddToCartButton({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition();
   const addtoCarta = () => {
     startTransition(async () => {
-      try {
-        const res = await addToCart(id);
-        if (res.success) {
-          toast.success(res.message);
-        }
-      } catch {
-        toast.error("somthing went wrong");
+      const res = await addToCart(id);
+      if (res.success) {
+        toast.success(res.message);
+        return;
       }
+      toast.error(res.message);
     });
   };
   return (

@@ -52,6 +52,7 @@ export const signUp = async (formData: SignUpFormData) => {
 };
 
 export const logIn = async (formData: LoginForm) => {
+  try {
   const parsed = loginSchema.safeParse(formData);
   if (!parsed.success) {
     return {
@@ -61,7 +62,6 @@ export const logIn = async (formData: LoginForm) => {
   }
   const { email, password } = parsed.data;
 
-  try {
     await signIn("credentials", {
       email,
       password,

@@ -34,6 +34,7 @@ export async function addToCart(productId: string) {
       update: { quantity: { increment: 1 } },
       create: { userId, productId, quantity: 1 },
     });
+    revalidatePath("/products/[slug]");
     return {
       success: true,
       message: "Item added to cart successfully.",

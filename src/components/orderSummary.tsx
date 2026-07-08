@@ -41,7 +41,7 @@ export default function OrderSummary({cartItems}: Props) {
         </span>
       </div>
       <Button className="h-10" asChild>
-        <Link href="/checkout">Proceed to Checkout</Link>
+        <Link href="/cart/checkout">Proceed to Checkout</Link>
       </Button>
     </div>
   );
