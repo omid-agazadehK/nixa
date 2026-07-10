@@ -1,48 +1,80 @@
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 import { Separator } from "./ui/separator";
 
-import { CartItemWithProduct } from "@/types";
-
-
-type Props = {
-  cartItems: CartItemWithProduct[];
-};
-
-export default function OrderSummary({cartItems}: Props) {
-   const subtotal = cartItems
-    .reduce((sum, item) => sum + item.product.price * item.quantity, 0)
-    .toFixed(2);
+export default async function OrderSummary() {
+  const session = await auth();
+  const userId = session?.user?.id;
+  const cartItem = await prisma.cartItem.findMany({
+    include: {
+      product: true,
+    },
+    where: {
+      userId: userId,
+    },
+    orderBy: { createdAt: "desc" },
+  });
   return (
-    <div className="xl:col-span-4 order-1 md:order-2 md:col-span-5 col-span-12  bg-card sm:py-6 py-4 px-5 sm:px-10 rounded-md border drop-shadow-md h-fit flex flex-col md:gap-y-8 gap-4">
-      <h5 className="text-2xl font-semibold">Order Summary</h5>
-      <div className="flex flex-col gap-y-2 font-light text-sm">
+    <div className="bg-card border rounded-2xl w-full col-span-6 py-4 h-fit px-6">
+      <h3 className="text-2xl font-bold">Order Summary</h3>
+      <div className="flex flex-col gap-4 py-4 text-sm">
+        <div className="divide-y divide-dashed text-base">
+          {cartItem.slice(0, 2).map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center w-full justify-between gap-4 "
+            >
+              <div className="flex items-center gap-4">
+                <Image
+                  src={item.product.images[0]}
+                  alt={item.product.name}
+                  width={50}
+                  height={50}
+                  className="rounded-2xl"
+                />
+                <div className="space-y-1 py-3">
+                  <p className="font-medium">{item.product.name}</p>
+                  <p className="font-medium text-muted-foreground ">
+                    ${item.product.price.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+              <p className="text-lg font-semibold">x{item.quantity}</p>
+            </div>
+          ))}
+        </div>
+        <Separator />
         <div className="flex items-center justify-between">
           <span>Subtotal</span>
-          <span className="font-normal">${subtotal}</span>
+          <span className="font-normal">
+            $
+            {cartItem
+              .reduce(
+                (sum, item) => sum + item.product.price * item.quantity,
+                0,
+              )
+              .toFixed(2)}
+          </span>
         </div>
         <div className="flex items-center justify-between">
           <span>Estimated shipping</span>
           <span className="font-normal">Free</span>
         </div>
-        <div className="flex items-center justify-between">
-          <span>taxes</span>
-          <span className="font-normal">Calculated at checkout</span>
-        </div>
-      </div>
-      <Separator />
-      <div className="space-y-4">
+        <Separator />
         <div className="flex items-center justify-between">
           <span className="font-medium">Total </span>
-          <span className="text-2xl font-bold">${subtotal}</span>
+          <span className="text-lg font-medium">
+            $
+            {cartItem
+              .reduce(
+                (sum, item) => sum + item.quantity * item.product.price,
+                0,
+              )
+              .toFixed(2)}
+          </span>
         </div>
-        <span className="text-xs text-muted-foreground">
-          Shipping and taxes calculated at checkout
-        </span>
       </div>
-      <Button className="h-10" asChild>
-        <Link href="/cart/checkout">Proceed to Checkout</Link>
-      </Button>
     </div>
   );
 }

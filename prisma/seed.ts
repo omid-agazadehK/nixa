@@ -133,28 +133,7 @@ async function main() {
   });
 
   // A sample order for the same user
-  const order = await prisma.order.create({
-    data: {
-      userId: user.id,
-      totalPrice: allProducts[4].price + allProducts[1].price,
-      status: 'PAID',
-      items: {
-        create: [
-          {
-            productId: allProducts[4].id,
-            quantity: 1,
-            price: allProducts[4].price,
-          },
-          {
-            productId: allProducts[1].id,
-            quantity: 1,
-            price: allProducts[1].price,
-          },
-        ],
-      },
-    },
-  });
-
+  
   
 }
 

@@ -63,6 +63,9 @@ model Order {
   userId     String
   user       User        @relation(fields: [userId], references: [id])
   items      OrderItem[]
+  fullName      String
+  phone         String
+  address       String
   totalPrice Float
   status     String      @default("PENDING")
   createdAt  DateTime    @default(now())

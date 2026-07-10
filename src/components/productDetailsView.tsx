@@ -38,7 +38,6 @@ export default async function ProductDetailsView({
       },
     });
   }
-console.log(cartItem)
   return (
     <section className="flex gap-x-10">
       <div className="aspect-square w-2/3 object-cover max-w-lg overflow-hidden">

@@ -1,0 +1,102 @@
+"use client";
+import { order } from "@/actions/order.actios";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Field, FieldGroup } from "@/components/ui/field";
+import { checkoutSchema } from "@/lib/schema";
+import { CheckOutForm } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "./ui/button";
+import FormInput from "./ui/FormInput";
+import { Spinner } from "./ui/spinner";
+import { useRouter } from "next/navigation";
+
+export default function CheckoutForm() {
+  const router = useRouter();
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: zodResolver(checkoutSchema),
+    mode: "onBlur",
+    defaultValues: {
+      fullName: "",
+      phone: "",
+      address: "",
+    },
+  });
+  const submitHandler = async (formData: CheckOutForm) => {
+    const res = await order(formData);
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+    toast.success(res.message);
+    router.push("/");
+  };
+  return (
+    <Card className="col-span-6 w-full ml-auto">
+      <form onSubmit={handleSubmit(submitHandler)}>
+        <CardHeader>
+          <CardTitle className="text-3xl  font-fraunces">Checkout</CardTitle>
+          <CardDescription>Contact Information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <FieldGroup>
+            <FormInput
+              control={control}
+              name="fullName"
+              placeholder="omid agazdeh"
+              label="name"
+              autoComplete="name"
+            />
+            <FormInput
+              control={control}
+              name="address"
+              placeholder="Street address, Apartment number, city, Zip code"
+              label="address"
+              autoComplete="street-address"
+              type="text"
+            />
+            <FormInput
+              control={control}
+              name="phone"
+              placeholder="+98 *** *** ****"
+              label="mobile"
+              autoComplete="tel"
+              type="tel"
+            />
+
+            <Field></Field>
+          </FieldGroup>
+        </CardContent>
+        <CardFooter>
+          <Button
+            disabled={isSubmitting}
+            className="py-5 w-full text-base"
+            size="lg"
+            type="submit"
+          >
+            {isSubmitting ? (
+              <>
+                <Spinner /> schecking
+              </>
+            ) : (
+              "checkout"
+            )}
+          </Button>
+        </CardFooter>
+      </form>
+    </Card>
+  );
+}

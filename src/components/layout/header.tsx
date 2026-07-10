@@ -11,17 +11,16 @@ import { Separator } from "../ui/separator";
 export default async function Header() {
   const session = await auth();
   const userId = session?.user?.id;
- 
-const cartQuantity = userId
-  ? await prisma.cartItem.aggregate({
-      where: { userId },
-      _sum: {
-        quantity: true,
-      },
-    })
-  : null;
- const cartItemsCount = cartQuantity?._sum.quantity ?? 0;
- console.log(cartItemsCount)
+
+  const cartQuantity = userId
+    ? await prisma.cartItem.aggregate({
+        where: { userId },
+        _sum: {
+          quantity: true,
+        },
+      })
+    : null;
+  const cartItemsCount = cartQuantity?._sum.quantity ?? 0;
 
   return (
     <header className="border-border bg-background/20 sticky top-0 z-50 hidden w-full border-b px-2 backdrop-blur-lg sm:block">
@@ -34,9 +33,9 @@ const cartQuantity = userId
           <Button variant="outline" className="relative" size="icon-lg" asChild>
             <Link href="/cart">
               <ShoppingCart fill="" />
-              {cartItemsCount  > 0 && (
+              {cartItemsCount > 0 && (
                 <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-                  {cartItemsCount }
+                  {cartItemsCount}
                 </span>
               )}
             </Link>

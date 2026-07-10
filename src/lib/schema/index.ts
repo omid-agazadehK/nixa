@@ -17,3 +17,11 @@ export const loginSchema = z.object({
     .min(8, "Password must be at least 8 characters")
     .max(16, "Password must be at most 16 characters"),
 });
+export const checkoutSchema = z.object({
+  fullName: z.string().min(2),
+  phone: z.string().min(10),
+  address: z
+    .string()
+    .min(10, "Address is too short")
+    .max(200, "Address is too long"),
+});

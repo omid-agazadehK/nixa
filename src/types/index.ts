@@ -1,4 +1,4 @@
-import { loginSchema, signUpSchema } from "@/lib/schema";
+import { checkoutSchema, loginSchema, signUpSchema } from "@/lib/schema";
 import { Prisma } from "@prisma/client";
 import z from "zod";
 
@@ -48,3 +48,4 @@ export type CartControlItem = Prisma.CartItemGetPayload<{
     quantity: true;
   };
 }>;
+export type CheckOutForm = z.infer<typeof checkoutSchema>;
