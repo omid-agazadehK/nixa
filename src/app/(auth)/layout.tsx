@@ -35,10 +35,7 @@ export default function AuthLayout({
 
         <div className="flex flex-col md:gap-y-20 gap-y-10 relative items-center justify-center px-5 md:px-0">
           <Button variant="secondary" asChild className="absolute top-6 left-6">
-            <Link
-              href="/"
-              className="  lex items-center gap-1 text-sm "
-            >
+            <Link href="/" className="  lex items-center gap-1 text-sm ">
               <ArrowLeft size={16} />
               Back to home
             </Link>
