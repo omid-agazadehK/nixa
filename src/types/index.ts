@@ -49,3 +49,6 @@ export type CartControlItem = Prisma.CartItemGetPayload<{
   };
 }>;
 export type CheckOutForm = z.infer<typeof checkoutSchema>;
+export type SuccessSearchParams = {
+  searchParams: { orderId: string };
+};

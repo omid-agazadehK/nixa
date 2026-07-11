@@ -16,8 +16,8 @@ export default async function OrderSummary() {
     orderBy: { createdAt: "desc" },
   });
   return (
-    <div className="bg-card border rounded-2xl w-full col-span-6 py-4 h-fit px-6">
-      <h3 className="text-2xl font-bold">Order Summary</h3>
+    <div className="bg-card border col-span-12 rounded-2xl order-1 md:order-2 w-full md:col-span-6 py-4 h-fit px-6">
+      <h3 className="text-2xl  font-fraunces">Order Summary</h3>
       <div className="flex flex-col gap-4 py-4 text-sm">
         <div className="divide-y divide-dashed text-base">
           {cartItem.slice(0, 2).map((item) => (
@@ -34,7 +34,7 @@ export default async function OrderSummary() {
                   className="rounded-2xl"
                 />
                 <div className="space-y-1 py-3">
-                  <p className="font-medium">{item.product.name}</p>
+                  <p className="font-medium md:text-base text-sm">{item.product.name}</p>
                   <p className="font-medium text-muted-foreground ">
                     ${item.product.price.toFixed(2)}
                   </p>

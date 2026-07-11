@@ -18,10 +18,8 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import FormInput from "./ui/FormInput";
 import { Spinner } from "./ui/spinner";
-import { useRouter } from "next/navigation";
 
 export default function CheckoutForm() {
-  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -42,10 +40,9 @@ export default function CheckoutForm() {
       return;
     }
     toast.success(res.message);
-    router.push("/");
   };
   return (
-    <Card className="col-span-6 w-full ml-auto">
+    <Card className="md:col-span-6 order-2 md:order-1 col-span-12 w-full ">
       <form onSubmit={handleSubmit(submitHandler)}>
         <CardHeader>
           <CardTitle className="text-3xl  font-fraunces">Checkout</CardTitle>

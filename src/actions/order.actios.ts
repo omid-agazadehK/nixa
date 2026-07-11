@@ -4,8 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { checkoutSchema } from "@/lib/schema";
 import { requireUserId } from "@/lib/utils";
 import { CheckOutForm } from "@/types";
+import { redirect } from "next/navigation";
 
 export async function order(formData: CheckOutForm) {
+  let orderId: string | undefined;
   try {
     const userId = await requireUserId();
     const validatedData = checkoutSchema.safeParse(formData);
@@ -40,7 +42,8 @@ export async function order(formData: CheckOutForm) {
       (sum, item) => sum + item.quantity * item.product.price,
       0,
     );
-    const order = await prisma.$transaction(async (tx) => {
+
+    await prisma.$transaction(async (tx) => {
       const order = await tx.order.create({
         data: {
           userId,
@@ -80,12 +83,19 @@ export async function order(formData: CheckOutForm) {
           userId,
         },
       });
-
+      orderId = order.id;
       return order;
     });
-    return { success: true, order, message: "order done" };
   } catch (error) {
     console.error(error);
     return { success: false, message: "Something went wrong" };
   }
+  if (!orderId) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+
+  redirect(`/cart/checkout/success?orderId=${orderId}`);
 }

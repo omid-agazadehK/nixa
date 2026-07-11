@@ -7,9 +7,9 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col pb-20">
       <Header />
-      <main className="flex-1 mx-auto w-full max-w-7xl md:mt-20 px-5 sm:px-10 xl:px-0">
+      <main className="flex-1 mx-auto w-full max-w-7xl md:mt-20 mt-10 px-5 sm:px-10 xl:px-0">
         {children}
       </main>
       <MobileNav />

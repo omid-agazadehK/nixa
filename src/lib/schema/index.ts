@@ -18,7 +18,7 @@ export const loginSchema = z.object({
     .max(16, "Password must be at most 16 characters"),
 });
 export const checkoutSchema = z.object({
-  fullName: z.string().min(2),
+  fullName: z.string().min(2,"Name must be at least 2 characters").max(20,"Name must be at most 20 characters"),
   phone: z.string().min(10),
   address: z
     .string()
