@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { prisma } from "./prisma";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,4 +17,43 @@ export async function requireUserId() {
   }
 
   return userId;
+}
+
+export function formatDate(date: unknown) {
+  if (!(date instanceof Date) && typeof date !== "string") {
+    return "";
+  }
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(date));
+}
+
+export function slugify(slug: string) {
+  return slug
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
+export async function validateProductConstraints(slug: string, categoryId: string) {
+  const [existingProduct, category] = await Promise.all([
+    prisma.product.findUnique({ where: { slug }, select: { id: true } }),
+    prisma.category.findUnique({
+      where: { id: categoryId },
+      select: { id: true },
+    }),
+  ]);
+
+  if (existingProduct) {
+    return { success: false, message: "Product with this name already exists" };
+  }
+
+  if (!category) {
+    return { success: false, message: "Category not found" };
+  }
+
+  return null;
 }

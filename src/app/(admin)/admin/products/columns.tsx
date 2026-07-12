@@ -3,6 +3,7 @@
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { DataTableColumnHeader } from "@/components/ui/dataTableColumnHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,35 +11,48 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Product } from "@prisma/client";
+import { formatDate } from "@/lib/utils";
+import { Category, Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
-    header: "Product",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Name" />;
+    },
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Category" />;
+    },
+    cell: ({ row }) => {
+      const category = row.getValue("category") as Category;
+      return category.name;
+    },
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Price" />;
+    },
   },
   {
     accessorKey: "stock",
-    header: "Stock",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Stock" />;
+    },
   },
   {
     accessorKey: "createdAt",
-    header: "Created",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="CreatedAt" />;
+    },
     cell: ({ row }) => {
-      return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }).format(new Date(row.getValue("createdAt")));
+      const createdAt = row.getValue("createdAt");
+      return formatDate(createdAt);
     },
   },
   {
@@ -57,7 +71,9 @@ export const columns: ColumnDef<Product>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/admin/products/${Products.id}/edit`}>Edit</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

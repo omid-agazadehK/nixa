@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "./field";
 import { Input } from "./input";
@@ -9,6 +10,7 @@ type FormInputProps<T extends FieldValues> = {
   label: string;
   autoComplete: string;
   type?: string;
+  className?: string;
 };
 
 export default function FormInput<T extends FieldValues>({
@@ -18,13 +20,14 @@ export default function FormInput<T extends FieldValues>({
   label,
   autoComplete,
   type = "text",
+  className = "",
 }: FormInputProps<T>) {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid}>
+        <Field data-invalid={fieldState.invalid} className={cn(className)}>
           <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
           <Input
             {...field}

@@ -1,5 +1,10 @@
-import { checkoutSchema, loginSchema, signUpSchema } from "@/lib/schema";
-import { Prisma } from "@prisma/client";
+import {
+  adminProductSchema,
+  checkoutSchema,
+  loginSchema,
+  signUpSchema,
+} from "@/lib/schema";
+import { Category, Prisma } from "@prisma/client";
 import z from "zod";
 
 export type Product = {
@@ -15,7 +20,7 @@ export type Product = {
   stock: number;
 };
 //
-export type Category = { id: string; name: string; slug: string };
+
 //
 export type SortOption = {
   price?: "asc" | "desc";
@@ -52,3 +57,4 @@ export type CheckOutForm = z.infer<typeof checkoutSchema>;
 export type SuccessSearchParams = {
   searchParams: { orderId: string };
 };
+export type AdminProductFormType = z.infer<typeof adminProductSchema>;
