@@ -7,6 +7,12 @@ import {
 import { Category, Prisma } from "@prisma/client";
 import z from "zod";
 
+export enum OrderStatus {
+  PENDING,
+  DELIVERED,
+  CANCELLED,
+}
+
 export type Product = {
   category: Category;
   categoryId: string;
@@ -47,6 +53,20 @@ export type CartItemWithProduct = Prisma.CartItemGetPayload<{
     };
   };
 }>;
+
+export type OrderWithRelations = Prisma.OrderGetPayload<{
+  include: {
+    user: true;
+    items: { include: { product: true } };
+  };
+}>;
+
+export type ProductWithCategory = Prisma.ProductGetPayload<{
+  include: {
+    category: true;
+  };
+}>;
+
 export type CartControlItem = Prisma.CartItemGetPayload<{
   select: {
     id: true;

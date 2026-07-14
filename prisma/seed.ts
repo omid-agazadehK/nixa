@@ -113,7 +113,7 @@ async function main() {
   });
 
   // Fetch real product ids for the cart and order below
-  const allProducts = await prisma.product.findMany();
+  const allProducts = await prisma.product.findMany({where:{ isActive: true } });
 
   // Sample cart items for the regular user
   await prisma.cartItem.create({

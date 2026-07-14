@@ -20,6 +20,7 @@ export default async function Products({
       category: searchParams.category
         ? { slug: searchParams.category }
         : undefined,
+      isActive: true,
     },
     orderBy: sortMap[searchParams.sort ?? "newest"],
     include: { category: true },

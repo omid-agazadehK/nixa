@@ -15,8 +15,8 @@ export async function addToCart(productId: string) {
       };
     }
 
-    const product = await prisma.product.findUnique({
-      where: { id: productId },
+    const product = await prisma.product.findFirst({
+      where: { id: productId,isActive: true   },
     });
     if (!product) {
       return { success: false, message: "Product not found." };

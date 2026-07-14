@@ -46,7 +46,7 @@ export default async function AdminLayout({
 }>) {
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar variant="inset">
         <SidebarHeader className="h-16 border-b items-start justify-center">
           <div className="flex items-center justify-between">
             <Logo />
@@ -73,11 +73,13 @@ export default async function AdminLayout({
         <SidebarFooter />
       </Sidebar>
 
-      <SidebarInset>
-        <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
+      <SidebarInset className="grid-bg">
+        <div className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger />
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 grid-bg">{children}</div>
+        </div>
+        <section className="flex flex-1 min-w-0  flex-col gap-4 p-4 ">
+          {children}
+        </section>
       </SidebarInset>
     </SidebarProvider>
   );

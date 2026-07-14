@@ -4,7 +4,7 @@ import { Box, ShoppingCart, TrendingUp, Users } from "lucide-react";
 
 export default async function AdminDashboardPage() {
   const [products, orders, users] = await Promise.all([
-    prisma.product.count(),
+    prisma.product.count({where:{ isActive: true } }),
     prisma.order.count(),
     prisma.user.count(),
   ]);

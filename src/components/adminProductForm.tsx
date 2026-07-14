@@ -4,6 +4,7 @@ import { AdminProductFormType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Category, Product } from "@prisma/client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -35,15 +36,14 @@ type Props = {
   onSuccess?: () => void;
 };
 
-
 export default function AdminProductForm({
   categories,
   product,
   onSubmit,
 }: Props) {
+  const router = useRouter();
   const isEdit = !!product;
 
-  console.log(product);
   const {
     formState: { isSubmitting },
     control,
@@ -69,6 +69,7 @@ export default function AdminProductForm({
       toast.error(result.message);
       return;
     }
+    if (isEdit) router.push("/admin/products");
     toast.success(result.message);
     reset();
   };
@@ -97,7 +98,7 @@ export default function AdminProductForm({
                 autoComplete="off"
               />
             </div>
-            <div className="col-span-12 flex  gap-5 items-start">
+            <div className="col-span-12 flex md:flex-row flex-col  gap-5 items-start">
               <FormInput
                 control={control}
                 className="*:text-xs *:md:text-base *:sm:text-sm"
@@ -123,7 +124,7 @@ export default function AdminProductForm({
               render={({ field, fieldState }) => (
                 <Field
                   data-invalid={fieldState.invalid}
-                  className="col-span-6 flex flex-col w-full gap-2 items-start *:text-xs *:md:text-base *:sm:text-sm"
+                  className="md:col-span-6 col-span-12 flex flex-col w-full gap-2 items-start *:text-xs *:md:text-base *:sm:text-sm"
                 >
                   <FieldLabel htmlFor="category">Category</FieldLabel>
                   <Select
@@ -147,6 +148,9 @@ export default function AdminProductForm({
                       ))}
                     </SelectContent>
                   </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -190,7 +194,12 @@ export default function AdminProductForm({
                 )}
               </Button>
               {isEdit && (
-                <Button type="button" variant="outline" className="py-5" asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="py-5"
+                  asChild
+                >
                   <Link href="/admin/products">Cancel</Link>
                 </Button>
               )}

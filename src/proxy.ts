@@ -10,7 +10,7 @@ export default auth((req) => {
   if (isLoggedIn && isAuthPage) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
-  if (!isLoggedIn && req.nextUrl.pathname === "/cart") {
+  if (!isLoggedIn && req.nextUrl.pathname === "/cart"||!isLoggedIn && req.nextUrl.pathname === "/admin") {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 });

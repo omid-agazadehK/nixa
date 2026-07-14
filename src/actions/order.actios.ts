@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { checkoutSchema } from "@/lib/schema";
 import { requireUserId } from "@/lib/utils";
 import { CheckOutForm } from "@/types";
+import { OrderStatus } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function order(formData: CheckOutForm) {
@@ -97,5 +99,13 @@ export async function order(formData: CheckOutForm) {
     };
   }
 
-  redirect(`/cart/checkout/success?orderId=${orderId}`);
+  redirect(`/checkout/success?orderId=${orderId}`);
+}
+
+export async function updateOrderStatus(id: string, status: OrderStatus) {
+  await prisma.order.update({
+    where: { id },
+    data: { status },
+  });
+  revalidatePath("/admin/orders");
 }

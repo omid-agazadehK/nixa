@@ -38,9 +38,24 @@ export function slugify(slug: string) {
     .replace(/[^a-z0-9-]/g, "");
 }
 
-export async function validateProductConstraints(slug: string, categoryId: string) {
+export async function validateProductConstraints(
+  slug: string,
+  categoryId: string,
+  productId?: string,
+) {
   const [existingProduct, category] = await Promise.all([
-    prisma.product.findUnique({ where: { slug }, select: { id: true } }),
+    prisma.product.findFirst({
+      where: {
+        slug,
+        ...(productId && {
+          NOT: {
+            id: productId,
+          },
+        }),
+        isActive: true,
+      },
+      select: { id: true },
+    }),
     prisma.category.findUnique({
       where: { id: categoryId },
       select: { id: true },

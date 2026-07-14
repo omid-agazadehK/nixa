@@ -45,6 +45,7 @@ model Product {
   cartItems   CartItem[]
   orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
+  isActive Boolean @default(true)
 }
 
 model CartItem {
@@ -57,7 +58,11 @@ model CartItem {
   createdAt DateTime @default(now())
    @@unique([userId, productId])
 }
-
+enum OrderStatus {
+  PENDING
+  DELIVERED
+  CANCELLED
+}
 model Order {
   id         String      @id @default(cuid())
   userId     String
@@ -67,7 +72,7 @@ model Order {
   phone         String
   address       String
   totalPrice Float
-  status     String      @default("PENDING")
+  status     OrderStatus      @default(PENDING)
   createdAt  DateTime    @default(now())
 }
 

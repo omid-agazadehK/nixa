@@ -14,8 +14,8 @@ export default async function ProductDetailsView({
 }) {
   const Session = await auth();
   const userId = Session?.user?.id;
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+  const product = await prisma.product.findFirst({
+    where: { slug: params.slug, isActive: true },
     include: { category: true },
   });
   if (!product) notFound();
@@ -69,7 +69,9 @@ export default async function ProductDetailsView({
           </span>
         </div>
         {!cartItem && <AddToCartButton id={product.id} />}
-        <div className=" flex items-center gap-4">{cartItem && <CartControls item={cartItem} />}</div>
+        <div className=" flex items-center gap-4">
+          {cartItem && <CartControls item={cartItem} />}
+        </div>
       </div>
     </section>
   );

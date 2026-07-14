@@ -24,9 +24,10 @@ export function DataTableColumnHeader<TData, TValue>({
   return (
     <Button
       size="sm"
-      variant="ghost"
+      variant="link"
       className={cn(className)}
       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      
     >
       {title}
       {column.getIsSorted() === "desc" ? (
