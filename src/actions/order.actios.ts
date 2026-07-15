@@ -103,9 +103,18 @@ export async function order(formData: CheckOutForm) {
 }
 
 export async function updateOrderStatus(id: string, status: OrderStatus) {
-  await prisma.order.update({
-    where: { id },
-    data: { status },
-  });
-  revalidatePath("/admin/orders");
+  try {
+    const result = await prisma.order.update({
+      where: { id },
+      data: { status },
+    });
+    revalidatePath("/admin/orders");
+    return {
+      success: true,
+      message: `#${result.id.slice(0, 8)} updated to ${result.status.toLowerCase()}`,
+    };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Something went wrong" };
+  }
 }

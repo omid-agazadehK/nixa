@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   ColumnDef,
   flexRender,
@@ -27,12 +27,12 @@ export default function TableConten<TData, TValue>({
     return "";
   };
   return (
-    <Table className="border-y">
+    <Table className="border-y ">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
+              <TableHead  className="truncate max-w-20" key={header.id}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
@@ -55,7 +55,7 @@ export default function TableConten<TData, TValue>({
                 <TableCell
                   key={cell.id}
                   title={getCellValueForTooltip(cell.getValue())}
-                  className="truncate" // max-w رو اینجا برداشتم، بهتره در تعریف ستون ها اعمال بشه
+                  className="truncate max-w-20"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
@@ -65,7 +65,7 @@ export default function TableConten<TData, TValue>({
         ) : (
           <TableRow>
             <TableCell colSpan={columns.length} className="h-24 text-center">
-              نتیجه‌ای یافت نشد.
+              didnt find anything!
             </TableCell>
           </TableRow>
         )}

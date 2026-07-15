@@ -37,3 +37,15 @@ export const adminProductSchema = z.object({
   image: z.string().url(),
   description: z.string().min(10, "Description is too short"),
 });
+export const UserProfileFormSchema = z.object({
+  firstName: z.string().max(10, "Name must be at most 10 characters"),
+  lastName: z.string().max(10, "Last name must be at most 10 characters"),
+  email: z.string().regex(emailRegex, "pls enter a vaild email address").trim(),
+  address: z
+    .string()
+    .min(1, "Address is required")
+    .max(255, "Address is too long"),
+  phone: z
+    .string()
+    .regex(/^(09\d{9})?$/, "Invalid phone number (e.g., 09123456789)"),
+});

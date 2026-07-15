@@ -24,7 +24,7 @@ interface DataTableProps<TData, TValue> {
   };
   page: number;
   totalPages: number;
-  baseUrl:string
+  baseUrl: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -34,7 +34,7 @@ export function DataTable<TData, TValue>({
   totalPages,
   filterColumn,
   createButton,
-  baseUrl
+  baseUrl,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -62,14 +62,18 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="bg-card rounded-2xl border">
+    <div className="bg-card rounded-2xl border  ">
       <DataTableToolbar
         filterColumn={filterColumn}
         createButton={createButton}
         table={table}
       />
       <TableContent table={table} columns={columns} />
-      <DataTablePagination page={page} totalPages={totalPages} baseUrl={baseUrl}/>
+      <DataTablePagination
+        page={page}
+        totalPages={totalPages}
+        baseUrl={baseUrl}
+      />
     </div>
   );
 }

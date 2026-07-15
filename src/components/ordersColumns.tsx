@@ -8,6 +8,7 @@ import { OrderWithRelations } from "@/types";
 import { OrderStatus } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Package } from "lucide-react";
+import { toast } from "sonner";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
@@ -22,15 +23,7 @@ import {
 export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
   {
     accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <DataTableColumnHeader
-          className="text-xs lg:text-sm px-0 "
-          column={column}
-          title="OrderId"
-        />
-      );
-    },
+    header: "Order id",
     cell: ({ row }) => {
       return <span>#{row.original.id.slice(0, 8)}</span>;
     },
@@ -93,7 +86,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
           variant="outline"
           className={` text-xs ${ORDER_STATUS[order.status].style}`}
         >
-          {row.original.status}
+          {ORDER_STATUS[order.status].label}
         </Badge>
       );
     },
@@ -110,7 +103,15 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
         (sum, item) => sum + item.price * item.quantity,
         0,
       );
-      console.log(OrderStatus[order.status]);
+      const statusHandler = async (order: string, status: OrderStatus) => {
+        const res = await updateOrderStatus(order, status);
+        if (!res.success) {
+          toast.error(res.message, { position: "bottom-right" });
+          return;
+        }
+        toast.success(res.message, { position: "bottom-right" });
+      };
+
       return (
         <Sheet>
           <SheetTrigger asChild>
@@ -131,7 +132,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
                   variant={"outline"}
                   className={` text-xs ${ORDER_STATUS[order.status].style}`}
                 >
-                  {order.status}
+                  {ORDER_STATUS[order.status].label}
                 </Badge>
               </div>
               <div className="flex items-center gap-4">
@@ -191,7 +192,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
                       variant="outline"
                       className={`cursor-pointer ${OrderStatus[status] === order.status ? config.style : ""}
                     `}
-                      onClick={() => updateOrderStatus(order.id, status)}
+                      onClick={() => statusHandler(order.id, status)}
                     >
                       {config.label}
                     </Button>

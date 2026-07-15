@@ -56,9 +56,9 @@ export default function AccountActions({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={"/cart"} className="flex items-center gap-x-2">
+            <Link href={"/profile"} className="flex items-center gap-x-2">
               <User />
-              Account settings
+              Profile
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />

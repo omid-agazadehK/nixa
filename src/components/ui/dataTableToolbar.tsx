@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -24,21 +24,8 @@ export default function DataTableToolbar<TData>({
   createButton,
 }: DataTableToolbarProps<TData>) {
   return (
-    <div className="flex flex-wrap items-center gap-2 py-4 px-2">
-      {filterColumn && (
-        <Input
-          placeholder="search ..."
-          value={
-            (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-          }
-          className="md:max-w-sm text-sm w-full sm:w-auto bg-card"
-        />
-      )}
-
-      <div className="flex items-center gap-2 mr-auto">
+    <div className="flex  w-full items-center justify-between gap-2 py-4 px-2">
+      <div className="flex items-center w-fit gap-2 ">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
@@ -68,6 +55,18 @@ export default function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      {filterColumn && (
+        <Input
+          placeholder="search ..."
+          value={
+            (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+          }
+          className="md:max-w-sm text-sm w-full sm:w-auto bg-card"
+        />
+      )}
     </div>
   );
 }

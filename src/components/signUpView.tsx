@@ -9,21 +9,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
 import { signUpSchema } from "@/lib/schema";
 import { SignUpFormData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import FormInput from "./ui/FormInput";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
 export default function SignUpView() {
-  const [isPending, startTransition] = useTransition();
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm({
     resolver: zodResolver(signUpSchema),
     mode: "onBlur",
     defaultValues: {
@@ -35,24 +37,22 @@ export default function SignUpView() {
   });
 
   const onSubmit = async (formData: SignUpFormData) => {
-    startTransition(async () => {
-      try {
-        const res = await signUp(formData);
-        if (res.status === "success") {
-          toast.success("Registration was successful.");
-          await signIn("credentials", {
-            email: formData.email,
-            password: formData.password,
-            redirectTo: "/",
-          });
-          return;
-        }
-        toast.error(res.message);
-      } catch (error) {
-        console.error("SIGNUP_FORM", error);
-        toast.error("Something went wrong!");
+    try {
+      const res = await signUp(formData);
+      if (res.status === "success") {
+        toast.success("Registration was successful.");
+        await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirectTo: "/",
+        });
+        return;
       }
-    });
+      toast.error(res.message);
+    } catch (error) {
+      console.error("SIGNUP_FORM", error);
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -99,8 +99,8 @@ export default function SignUpView() {
             />
 
             <Field>
-              <Button disabled={isPending} className="py-5" type="submit">
-                {isPending ? <Spinner /> : "Submit"}
+              <Button disabled={isSubmitting} className="py-5" type="submit">
+                {isSubmitting ? <Spinner /> : "Submit"}
               </Button>
             </Field>
           </FieldGroup>

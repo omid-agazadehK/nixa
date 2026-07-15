@@ -3,6 +3,7 @@ import {
   checkoutSchema,
   loginSchema,
   signUpSchema,
+  UserProfileFormSchema,
 } from "@/lib/schema";
 import { Category, Prisma } from "@prisma/client";
 import z from "zod";
@@ -78,3 +79,4 @@ export type SuccessSearchParams = {
   searchParams: { orderId: string };
 };
 export type AdminProductFormType = z.infer<typeof adminProductSchema>;
+export type UserFormValues = z.infer<typeof UserProfileFormSchema>;
