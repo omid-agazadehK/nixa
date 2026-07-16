@@ -1,5 +1,5 @@
 import SignUpView from "@/components/signUpView";
 
-export default function SSignUpPage() {
+export default function SignUpPage() {
   return <SignUpView />;
 }

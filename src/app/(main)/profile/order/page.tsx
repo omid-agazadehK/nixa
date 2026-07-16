@@ -1,3 +1,5 @@
+import ProfileUserOrders from "@/components/profileUserOrders";
+
 export default function UserOrders() {
-  return <div>UserOrders</div>;
+  return <ProfileUserOrders />;
 }
