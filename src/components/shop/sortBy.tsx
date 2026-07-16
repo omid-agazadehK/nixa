@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 export default function SortBy() {
   const router = useRouter();
   const pathname = usePathname();

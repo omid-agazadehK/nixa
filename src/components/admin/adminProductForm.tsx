@@ -7,25 +7,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
+import FormInput from "../shared/FormInput";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
-import FormInput from "./ui/FormInput";
+} from "../ui/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Spinner } from "./ui/spinner";
-import { Textarea } from "./ui/textarea";
+} from "../ui/select";
+import { Spinner } from "../ui/spinner";
+import { Textarea } from "../ui/textarea";
 
 type Props = {
   categories: Category[];

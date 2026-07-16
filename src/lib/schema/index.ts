@@ -44,8 +44,8 @@ export const UserProfileFormSchema = z.object({
   address: z
     .string()
     .min(1, "Address is required")
-    .max(255, "Address is too long"),
+    .max(255, "Address is too long").or(z.literal("")),
   phone: z
     .string()
-    .regex(/^(09\d{9})?$/, "Invalid phone number (e.g., 09123456789)"),
+    .regex(/^(09\d{9})?$/, "Invalid phone number (e.g., 09123456789)").or(z.literal("")),
 });

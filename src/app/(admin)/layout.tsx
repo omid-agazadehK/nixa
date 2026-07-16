@@ -1,4 +1,4 @@
-import Logo from "@/components/logo";
+import Logo from "@/components/shared/logo";
 import {
   Sidebar,
   SidebarContent,
@@ -77,9 +77,9 @@ export default async function AdminLayout({
         <div className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger />
         </div>
-        <section className="flex flex-1 min-w-0  flex-col gap-4 p-4 ">
+        <div className="flex flex-1 min-w-0  flex-col gap-4 p-4 ">
           {children}
-        </section>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

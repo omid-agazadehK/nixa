@@ -1,4 +1,4 @@
-import EditProductPageView from "@/components/editProductPage";
+import EditProductPageView from "@/components/admin/editProductPage";
 
 export default async function EditProductPage({
   params,

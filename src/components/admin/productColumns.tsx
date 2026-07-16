@@ -3,6 +3,7 @@
 import { MoreHorizontal } from "lucide-react";
 
 import { deleteProduct } from "@/actions/product.actions";
+import { DataTableColumnHeader } from "@/components/shared/dataTableColumnHeader";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +17,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DataTableColumnHeader } from "@/components/ui/dataTableColumnHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -83,12 +83,15 @@ export const productColumns: ColumnDef<ProductWithCategory>[] = [
     accessorKey: "isActive",
     header: "Status",
     cell: ({ row }) => (
-      <Badge className="text-xs" variant={row.original.isActive ? "default" : "destructive"}>
+      <Badge
+        className="text-xs"
+        variant={row.original.isActive ? "default" : "destructive"}
+      >
         {row.original.isActive ? "Active" : "Inactive"}
       </Badge>
     ),
   },
-  
+
   {
     id: "actions",
     header: "Actions",

@@ -1,4 +1,4 @@
-import ShopView from "@/components/shopView";
+import ShopView from "@/components/shop/shopView";
 import { ShopSearchParams } from "@/types";
 
 export default async function ShopPage({

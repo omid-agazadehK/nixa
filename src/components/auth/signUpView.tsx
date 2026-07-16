@@ -17,7 +17,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useForm, UseFormProps } from "react-hook-form";
 import { toast } from "sonner";
-import FormInput from "../ui/FormInput";
+import FormInput from "../shared/FormInput";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 

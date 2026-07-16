@@ -1,7 +1,7 @@
 import { ShopSearchParams } from "@/types";
 import { Suspense } from "react";
-import Category from "./category";
 import ProductCardSkeleton from "./productCardSkeleton";
+import Category from "./category";
 import Products from "./products";
 import SearchInput from "./searchInput";
 import SortBy from "./sortBy";

@@ -3,7 +3,7 @@
 import { Handbag, LucideIcon, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 const profileLinks: {
   href: string;
   title: string;
@@ -31,7 +31,7 @@ export default function ProfileNavItem() {
             : pathName.startsWith(item.href);
 
         const Icon = item.icon;
-       
+
         return (
           <Button
             key={item.href}

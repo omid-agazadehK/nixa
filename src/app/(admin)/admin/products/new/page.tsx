@@ -1,4 +1,4 @@
-import NewView from "@/components/newView";
+import NewView from "@/components/admin/newView";
 
 export default function NewPage() {
   return <NewView />;

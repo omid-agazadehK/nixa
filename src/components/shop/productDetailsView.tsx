@@ -2,10 +2,10 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import CartControls from "../shared/cartControls";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 import AddToCartButton from "./addToCartButton";
-import CartControls from "./cartControls";
-import { Badge } from "./ui/badge";
-import { DropdownMenuSeparator } from "./ui/dropdown-menu";
 
 export default async function ProductDetailsView({
   params,
@@ -55,12 +55,12 @@ export default async function ProductDetailsView({
           <h2 className="text-4xl mb-4 font-bold ">{product.name}</h2>
           <Badge variant={"secondary"}>{product.category.name}</Badge>
         </div>
-        <DropdownMenuSeparator />
+        <Separator />
         <div className="flex flex-col gap-y-5">
           <span className=" text-lg">DESCRIPTION</span>
           <span>{product.description}</span>
         </div>
-        <DropdownMenuSeparator />
+        <Separator />
 
         <div className="flex flex-col gap-y-5">
           <span className="tracking-wide">PRICE</span>

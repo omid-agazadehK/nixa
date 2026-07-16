@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 
 type NavItems = { title: string; href: string }[];
 const navItems: NavItems = [

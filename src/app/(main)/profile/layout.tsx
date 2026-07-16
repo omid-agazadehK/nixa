@@ -1,4 +1,4 @@
-import ProfileNavItem from "@/components/profileNavItem";
+import ProfileNavItem from "@/components/layout/main/profileNavItem";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";

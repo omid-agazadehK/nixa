@@ -1,16 +1,18 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { LogIn, ShoppingCart, User } from "lucide-react";
+import { LogIn, ShoppingCart, User, UserRoundCog } from "lucide-react";
 import Link from "next/link";
-import AccountActions from "../accountActions";
-import Logo from "../logo";
-import NavLinks from "../navLinks";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { UserRole } from "@prisma/client";
+import Logo from "@/components/shared/logo";
+import NavLinks from "./navLinks";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import AccountActions from "./accountActions";
 
-export default async function Header() {
+export default async function MainHeader() {
   const session = await auth();
   const userId = session?.user?.id;
+  console.log(session);
 
   const cartQuantity = userId
     ? await prisma.cartItem.aggregate({
@@ -24,7 +26,7 @@ export default async function Header() {
 
   return (
     <header className="border-border bg-background/20 sticky top-0 z-50 hidden w-full border-b px-2 backdrop-blur-lg sm:block">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
         <div className="flex items-center gap-x-10">
           <Logo variant="small" />
           <NavLinks />
@@ -58,6 +60,13 @@ export default async function Header() {
             </div>
           )}
           {session?.user && <AccountActions user={session.user} />}
+          {session?.user?.role === UserRole.ADMIN && (
+            <Button asChild size="icon-lg">
+              <Link href="/admin/dashboard">
+                <UserRoundCog />
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>

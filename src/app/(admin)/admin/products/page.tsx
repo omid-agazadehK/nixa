@@ -1,44 +1,13 @@
-import { prisma } from "@/lib/prisma";
-import { productColumns } from "../../../../components/productColumns";
-import { DataTable } from "../../../../components/ui/data-table";
+import AdminProductsView from "@/components/admin/adminProductsView";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: { page: string };
 }) {
   const { page: pageParam } = await searchParams;
-  const page = Math.max(1, Number(pageParam) || 1);
-  const limit = 10;
-  const totalPages = Math.ceil((await prisma.product.count()) / limit);
-  const products = await prisma.product.findMany({
-    include: { category: true },
-    skip: (+page - 1) * limit,
-    take: limit,
-  });
-  return (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold tracking-tight">Products</h2>
-        <p className="text-sm text-muted-foreground">
-          Manage your store products, update inventory, and keep your catalog
-          organized.
-        </p>
-      </div>
-      <DataTable
-        columns={productColumns}
-        data={products}
-        filterColumn="name"
-        createButton={{
-          href: "/admin/products/new",
-          label: "Create product",
-        }}
-        baseUrl="/admin/products"
-        page={page}
-        totalPages={totalPages}
-      />
-    </div>
-  );
+
+  return <AdminProductsView pageParam={pageParam} />;
 }

@@ -14,29 +14,28 @@ import { loginSchema } from "@/lib/schema";
 import { LoginForm } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormProps } from "react-hook-form";
 import { toast } from "sonner";
-import FormInput from "./ui/FormInput";
-import { Button } from "./ui/button";
-import { Spinner } from "./ui/spinner";
-
+import FormInput from "../shared/FormInput";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
+const formOptions: UseFormProps<LoginForm> = {
+  resolver: zodResolver(loginSchema),
+  mode: "onBlur",
+  defaultValues: {
+    email: "",
+    password: "",
+  },
+};
 export default function LoginView() {
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = useForm({
-    resolver: zodResolver(loginSchema),
-    mode: "onBlur",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  } = useForm<LoginForm>(formOptions);
 
   const onSubmit = async (formData: LoginForm) => {
     const res = await logIn(formData);
-
     if (!res.success) {
       toast.error(res.message);
       return;
@@ -81,8 +80,8 @@ export default function LoginView() {
       <CardFooter>
         <span>
           New to Nixa sho?{" "}
-          <Link href="signup" className="underline text-primary/80">
-            Create and account
+          <Link href="/signup" className="underline text-primary/80">
+            Create an account{" "}
           </Link>
         </span>
       </CardFooter>

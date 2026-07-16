@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { Field, FieldError, FieldLabel } from "./field";
-import { Input } from "./input";
+import { Field, FieldError, FieldLabel } from "../ui/field";
+import { Input } from "../ui/input";
 
 type FormInputProps<T extends FieldValues> = {
   control: Control<T>;

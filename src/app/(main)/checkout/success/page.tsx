@@ -1,4 +1,4 @@
-import SuccessView from "@/components/successView";
+import SuccessView from "@/components/checkout/successView";
 import { SuccessSearchParams } from "@/types";
 
 export default async function SuccessPage({

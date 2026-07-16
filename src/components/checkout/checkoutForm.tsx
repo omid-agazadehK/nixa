@@ -8,16 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field, FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/components/ui/field";
 import { checkoutSchema } from "@/lib/schema";
 import { CheckOutForm } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
-import FormInput from "./ui/FormInput";
-import { Spinner } from "./ui/spinner";
+import FormInput from "../shared/FormInput";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 export default function CheckoutForm() {
   const {
@@ -73,8 +73,6 @@ export default function CheckoutForm() {
               autoComplete="tel"
               type="tel"
             />
-
-            <Field></Field>
           </FieldGroup>
         </CardContent>
         <CardFooter>

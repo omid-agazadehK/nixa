@@ -7,8 +7,8 @@ import {
 import { useCartItem } from "@/hooks/useCartItem";
 import { CartControlItem } from "@/types";
 import { Recycle } from "lucide-react";
-import { Button } from "./ui/button";
-import { Spinner } from "./ui/spinner";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 export default function CartControls({ item }: { item: CartControlItem }) {
   const {

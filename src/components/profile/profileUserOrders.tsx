@@ -13,22 +13,22 @@ import { ORDER_STATUS } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import { Eye, Package } from "lucide-react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
+} from "../ui/sheet";
 
 export default async function ProfileUserOrders() {
   const session = await auth();
   const userId = session?.user?.id;
   const userOrders = await prisma.order.findMany({
-    where:{userId},
+    where: { userId },
     include: { user: true, items: { include: { product: true } } },
     orderBy: { createdAt: "desc" },
   });

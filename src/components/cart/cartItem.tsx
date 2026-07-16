@@ -1,10 +1,8 @@
-
-
-import Image from "next/image";
-import CartControls from "./cartControls";
-import { Badge } from "./ui/badge";
-import { Separator } from "./ui/separator";
 import { CartItemWithProduct } from "@/types";
+import Image from "next/image";
+import CartControls from "../shared/cartControls";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 
 export default function CartItem({ item }: { item: CartItemWithProduct }) {
   return (

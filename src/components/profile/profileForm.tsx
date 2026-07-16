@@ -6,11 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
-import { CardContent } from "./ui/card";
-import { Field, FieldGroup } from "./ui/field";
-import FormInput from "./ui/FormInput";
-import { Spinner } from "./ui/spinner";
+import FormInput from "../shared/FormInput";
+import { Button } from "../ui/button";
+import { CardContent } from "../ui/card";
+import { Field, FieldGroup } from "../ui/field";
+import { Spinner } from "../ui/spinner";
 type Props = {
   user: User;
 };
@@ -48,7 +48,7 @@ export default function ProfileForm({ user }: Props) {
     <>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FieldGroup >
+          <FieldGroup>
             <div className="grid grid-cols-2 gap-4">
               <FormInput
                 control={control}

@@ -4,7 +4,7 @@ import { SuccessSearchParams } from "@/types";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 
 export default async function SuccessView({
   searchParams,

@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 
 export default async function OrderSummary() {
   const session = await auth();
@@ -34,7 +34,9 @@ export default async function OrderSummary() {
                   className="rounded-2xl"
                 />
                 <div className="space-y-1 py-3">
-                  <p className="font-medium md:text-base text-sm">{item.product.name}</p>
+                  <p className="font-medium md:text-base text-sm">
+                    {item.product.name}
+                  </p>
                   <p className="font-medium text-muted-foreground ">
                     ${item.product.price.toFixed(2)}
                   </p>

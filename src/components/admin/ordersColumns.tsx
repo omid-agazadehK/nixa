@@ -1,7 +1,7 @@
 "use client";
 
 import { updateOrderStatus } from "@/actions/order.actios";
-import { DataTableColumnHeader } from "@/components/ui/dataTableColumnHeader";
+import { DataTableColumnHeader } from "@/components/shared/dataTableColumnHeader";
 import { ORDER_STATUS } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 import { OrderWithRelations } from "@/types";
@@ -9,16 +9,11 @@ import { OrderStatus } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Package } from "lucide-react";
 import { toast } from "sonner";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
+import { Badge } from "../ui/badge";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+
 
 export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
   {

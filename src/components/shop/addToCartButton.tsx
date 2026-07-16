@@ -2,8 +2,8 @@
 import { addToCart } from "@/actions/cart.actions";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
-import { Spinner } from "./ui/spinner";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 export default function AddToCartButton({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition();
