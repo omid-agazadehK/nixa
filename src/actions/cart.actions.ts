@@ -1,22 +1,15 @@
 "use server";
 
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { requireUserId } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
 export async function addToCart(productId: string) {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please sign in to add items to your cart.",
-      };
-    }
+    const userId = await requireUserId();
 
     const product = await prisma.product.findFirst({
-      where: { id: productId,isActive: true   },
+      where: { id: productId, isActive: true },
     });
     if (!product) {
       return { success: false, message: "Product not found." };
@@ -52,14 +45,8 @@ export async function addToCart(productId: string) {
 
 export async function removeFromCart(cartItemId: string) {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please sign in to remove items from your cart.",
-      };
-    }
+    const userId = await requireUserId();
+
     await prisma.cartItem.deleteMany({
       where: {
         id: cartItemId,
@@ -83,14 +70,8 @@ export async function removeFromCart(cartItemId: string) {
 }
 export async function incrementFromCart(cartItemId: string) {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please sign in to update items in your cart.",
-      };
-    }
+    const userId = await requireUserId();
+
     const cartItem = await prisma.cartItem.findUnique({
       where: { id: cartItemId },
       include: { product: true },
@@ -129,14 +110,8 @@ export async function incrementFromCart(cartItemId: string) {
 }
 export async function decrementFromCart(cartItemId: string) {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
-    if (!userId) {
-      return {
-        success: false,
-        message: "Please sign in to update items in your cart.",
-      };
-    }
+    const userId = await requireUserId();
+
     const cartItem = await prisma.cartItem.findUnique({
       where: { id: cartItemId },
     });

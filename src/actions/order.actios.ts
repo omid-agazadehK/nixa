@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { checkoutSchema } from "@/lib/schema";
-import { requireUserId } from "@/lib/utils";
+import { requireAdmin, requireUserId } from "@/lib/utils";
 import { CheckOutForm } from "@/types";
 import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -104,6 +104,8 @@ export async function order(formData: CheckOutForm) {
 
 export async function updateOrderStatus(id: string, status: OrderStatus) {
   try {
+    await requireAdmin();
+
     const result = await prisma.order.update({
       where: { id },
       data: { status },

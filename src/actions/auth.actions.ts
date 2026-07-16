@@ -3,6 +3,7 @@
 import { signIn, signOut } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loginSchema, signUpSchema } from "@/lib/schema";
+import { requireUserId } from "@/lib/utils";
 import { LoginForm, SignUpFormData } from "@/types";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
@@ -53,14 +54,14 @@ export const signUp = async (formData: SignUpFormData) => {
 
 export const logIn = async (formData: LoginForm) => {
   try {
-  const parsed = loginSchema.safeParse(formData);
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: "Invalid form data. Please refresh and try again.",
-    };
-  }
-  const { email, password } = parsed.data;
+    const parsed = loginSchema.safeParse(formData);
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: "Invalid form data. Please refresh and try again.",
+      };
+    }
+    const { email, password } = parsed.data;
 
     await signIn("credentials", {
       email,
@@ -86,6 +87,7 @@ export const logIn = async (formData: LoginForm) => {
 };
 export const logout = async () => {
   try {
+
     await signOut({ redirectTo: "/login" });
     return { success: true }; // never actually reached — signOut always redirects on success
   } catch (err) {

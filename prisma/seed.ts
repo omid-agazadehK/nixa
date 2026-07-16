@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import { PrismaClient, UserRole } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -13,107 +13,109 @@ async function main() {
   await prisma.user.deleteMany();
 
   // Users (password is hashed since NextAuth will need to verify it later)
-  const hashedPassword = await bcrypt.hash('123456', 10);
+  const hashedPassword = await bcrypt.hash("dimo0098", 10);
 
   const admin = await prisma.user.create({
     data: {
-      fullName: 'Admin User',
-      email: 'admin@test.com',
+      fullName: "omid",
+      email: "dimo.steamer@gmail.com",
       password: hashedPassword,
-      phone: '+1 212 555 0100',
-      role: 'ADMIN',
+      phone: "+1 212 555 0100",
+      role: UserRole.ADMIN,
     },
   });
 
   const user = await prisma.user.create({
     data: {
-      fullName: 'John Carter',
-      email: 'john@test.com',
+      fullName: "John Carter",
+      email: "john@test.com",
       password: hashedPassword,
-      phone: '+1 212 555 0148',
-      address: '123 Main St, New York, NY 10001',
-      role: 'USER',
+      phone: "+1 212 555 0148",
+      address: "123 Main St, New York, NY 10001",
+      role: UserRole.USER,
     },
   });
 
   // Categories (created first since products need their id)
   const chairCategory = await prisma.category.create({
-    data: { name: 'Chairs', slug: 'chairs' },
+    data: { name: "Chairs", slug: "chairs" },
   });
 
   const sofaCategory = await prisma.category.create({
-    data: { name: 'Sofas', slug: 'sofas' },
+    data: { name: "Sofas", slug: "sofas" },
   });
 
   const tableCategory = await prisma.category.create({
-    data: { name: 'Tables', slug: 'tables' },
+    data: { name: "Tables", slug: "tables" },
   });
 
   // Products
   await prisma.product.createMany({
     data: [
       {
-        name: 'Classic Wooden Chair',
-        slug: 'classic-wooden-chair',
+        name: "Classic Wooden Chair",
+        slug: "classic-wooden-chair",
         description:
-          'A classic wooden chair with a comfortable design, perfect for the living room.',
+          "A classic wooden chair with a comfortable design, perfect for the living room.",
         price: 129.99,
         stock: 15,
-        images: ['https://picsum.photos/seed/chair1/600/600'],
+        images: ["https://picsum.photos/seed/chair1/600/600"],
         categoryId: chairCategory.id,
       },
       {
-        name: 'Ergonomic Office Chair',
-        slug: 'ergonomic-office-chair',
+        name: "Ergonomic Office Chair",
+        slug: "ergonomic-office-chair",
         description:
-          'An office chair with an adjustable backrest, built for long work hours.',
+          "An office chair with an adjustable backrest, built for long work hours.",
         price: 249.99,
         stock: 8,
-        images: ['https://picsum.photos/seed/chair2/600/600'],
+        images: ["https://picsum.photos/seed/chair2/600/600"],
         categoryId: chairCategory.id,
       },
       {
-        name: 'Modern L-Shaped Sofa',
-        slug: 'modern-l-shaped-sofa',
+        name: "Modern L-Shaped Sofa",
+        slug: "modern-l-shaped-sofa",
         description:
-          'An L-shaped sofa with premium fabric and a minimal, modern design.',
+          "An L-shaped sofa with premium fabric and a minimal, modern design.",
         price: 899.99,
         stock: 4,
-        images: ['https://picsum.photos/seed/sofa1/600/600'],
+        images: ["https://picsum.photos/seed/sofa1/600/600"],
         categoryId: sofaCategory.id,
       },
       {
-        name: 'Chesterfield Loveseat',
-        slug: 'chesterfield-loveseat',
-        description: 'A two-seat Chesterfield sofa in premium faux leather.',
+        name: "Chesterfield Loveseat",
+        slug: "chesterfield-loveseat",
+        description: "A two-seat Chesterfield sofa in premium faux leather.",
         price: 649.99,
         stock: 6,
-        images: ['https://picsum.photos/seed/sofa2/600/600'],
+        images: ["https://picsum.photos/seed/sofa2/600/600"],
         categoryId: sofaCategory.id,
       },
       {
-        name: 'Wooden Dining Table',
-        slug: 'wooden-dining-table',
-        description: 'A 6-seater dining table made from solid walnut wood.',
+        name: "Wooden Dining Table",
+        slug: "wooden-dining-table",
+        description: "A 6-seater dining table made from solid walnut wood.",
         price: 499.99,
         stock: 5,
-        images: ['https://picsum.photos/seed/table1/600/600'],
+        images: ["https://picsum.photos/seed/table1/600/600"],
         categoryId: tableCategory.id,
       },
       {
-        name: 'Glass Coffee Table',
-        slug: 'glass-coffee-table',
-        description: 'A coffee table with a glass top and a metal frame.',
+        name: "Glass Coffee Table",
+        slug: "glass-coffee-table",
+        description: "A coffee table with a glass top and a metal frame.",
         price: 199.99,
         stock: 10,
-        images: ['https://picsum.photos/seed/table2/600/600'],
+        images: ["https://picsum.photos/seed/table2/600/600"],
         categoryId: tableCategory.id,
       },
     ],
   });
 
   // Fetch real product ids for the cart and order below
-  const allProducts = await prisma.product.findMany({where:{ isActive: true } });
+  const allProducts = await prisma.product.findMany({
+    where: { isActive: true },
+  });
 
   // Sample cart items for the regular user
   await prisma.cartItem.create({
@@ -133,8 +135,6 @@ async function main() {
   });
 
   // A sample order for the same user
-  
-  
 }
 
 main()

@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { adminProductSchema } from "@/lib/schema";
 import {
+  requireAdmin,
   requireUserId,
   slugify,
   validateProductConstraints,
@@ -11,7 +12,8 @@ import { revalidatePath } from "next/cache";
 
 export async function createProduct(data: AdminProductFormType) {
   try {
-    requireUserId();
+    await requireAdmin();
+
     const result = adminProductSchema.safeParse(data);
 
     if (!result.success) {
@@ -45,7 +47,7 @@ export async function createProduct(data: AdminProductFormType) {
 
 export async function updateProduct(id: string, data: AdminProductFormType) {
   try {
-    await requireUserId();
+    await requireAdmin();
     const result = adminProductSchema.safeParse(data);
 
     if (!result.success) {

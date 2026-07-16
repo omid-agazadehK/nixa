@@ -1,20 +1,44 @@
+
+
+import { matchesRoute } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { auth } from "./auth";
+import { adminRoutes, protectedRoutes } from "./lib/constants/permissions";
+
 
 export default auth((req) => {
+  const pathname = req.nextUrl.pathname;
   const isLoggedIn = !!req.auth;
-  const isAuthPage =
-    req.nextUrl.pathname.startsWith("/login") ||
-    req.nextUrl.pathname.startsWith("/signup");
 
-  if (isLoggedIn && isAuthPage) {
-    return NextResponse.redirect(new URL("/", req.nextUrl));
+
+  if (
+    isLoggedIn &&
+    pathname.startsWith("/login")
+  ) {
+    return NextResponse.redirect(
+      new URL("/", req.url)
+    );
   }
-  if (!isLoggedIn && req.nextUrl.pathname === "/cart"||!isLoggedIn && req.nextUrl.pathname === "/admin") {
-    return NextResponse.redirect(new URL("/", req.nextUrl));
+
+
+  if (
+    !isLoggedIn &&
+    matchesRoute(pathname, protectedRoutes)
+  ) {
+    return NextResponse.redirect(
+      new URL("/login", req.url)
+    );
   }
+
+
+  if (
+    matchesRoute(pathname, adminRoutes) &&
+    req.auth?.user.role !== "ADMIN"
+  ) {
+    return NextResponse.redirect(
+      new URL("/", req.url)
+    );
+  }
+
+  return NextResponse.next();
 });
-export const config = {
-  matcher:
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-};
