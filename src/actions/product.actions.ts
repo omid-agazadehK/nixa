@@ -17,7 +17,7 @@ export async function createProduct(data: AdminProductFormType) {
     const result = adminProductSchema.safeParse(data);
 
     if (!result.success) {
-      return { success: false, message: "input incorrect" };
+      return { success: false, message: "Invalid form data." };
     }
     const { name, price, stock, description, image, categoryId } = result.data;
     const slug = slugify(name);
@@ -38,10 +38,9 @@ export async function createProduct(data: AdminProductFormType) {
         images: [image],
       },
     });
-    return { success: true, message: "Product created", product };
+    return { success: true, message: "Product created successfully.", product };
   } catch (error) {
-    console.error("[createProduct]", error);
-    return { success: false, message: "Failed to create product" };
+    return { success: false, message: "Something went wrong. Failed to create the product." };
   }
 }
 
@@ -78,15 +77,14 @@ export async function updateProduct(id: string, data: AdminProductFormType) {
       },
     });
 
-    return { success: true, message: "Product edit complate.", product };
+    return { success: true, message: "Product updated successfully.", product };
   } catch (error) {
-    console.error("[editeProduct]", error);
-    return { success: false, message: "Failed to edit product" };
+    return { success: false, message: "Failed to update product." };
   }
 }
 export async function deleteProduct(id: string) {
   try {
-    await requireUserId();
+    await requireAdmin();
 
     const res = await prisma.product.update({
       where: { id },
@@ -94,9 +92,8 @@ export async function deleteProduct(id: string) {
     });
     revalidatePath("/admin/products");
 
-    return { success: true, message: "Product deleted successfully!", res };
+    return { success: true, message: "Product deleted successfully.", res };
   } catch (error) {
-    console.error("[deleteProduct]", error);
-    return { success: false, message: "Failed to delete product" };
+    return { success: false, message: "Failed to delete product." };
   }
 }

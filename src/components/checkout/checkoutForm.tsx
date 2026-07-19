@@ -43,9 +43,9 @@ export default function CheckoutForm() {
   };
   return (
     <Card className="md:col-span-6 order-2 md:order-1 col-span-12 w-full ">
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form className="space-y-5" onSubmit={handleSubmit(submitHandler)}>
         <CardHeader>
-          <CardTitle className="text-3xl  font-fraunces">Checkout</CardTitle>
+          <CardTitle className="text-3xl font-fraunces">Checkout</CardTitle>
           <CardDescription>Contact Information</CardDescription>
         </CardHeader>
         <CardContent>
@@ -84,7 +84,7 @@ export default function CheckoutForm() {
           >
             {isSubmitting ? (
               <>
-                <Spinner /> schecking
+                <Spinner /> checking
               </>
             ) : (
               "checkout"

@@ -10,10 +10,15 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Package } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "../ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 
 export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
   {
@@ -45,6 +50,9 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
           title="Total"
         />
       );
+    },
+    cell: ({ row }) => {
+      return <span>{row.original.totalPrice.toFixed(2)}</span>;
     },
   },
   {
@@ -174,7 +182,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
                 ))}
                 <div className="bg-muted border rounded text-sm flex items-center justify-between px-4 py-3 w-full">
                   <span>Total</span>
-                  <span>${totalPrice}</span>
+                  <span>${totalPrice.toFixed(2)}</span>
                 </div>
               </div>
               <span>Update Status</span>

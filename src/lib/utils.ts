@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
+import { UserRole } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { prisma } from "./prisma";
-import { UserRole } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -89,4 +89,11 @@ export async function validateProductConstraints(
 
 export function matchesRoute(pathname: string, routes: string[]) {
   return routes.some((route) => pathname.startsWith(route));
+}
+export function isActive(pathname: string, href: string, exact = false) {
+  if (exact) {
+    return pathname === href;
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
 }

@@ -3,7 +3,6 @@
 import { signIn, signOut } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loginSchema, signUpSchema } from "@/lib/schema";
-import { requireUserId } from "@/lib/utils";
 import { LoginForm, SignUpFormData } from "@/types";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
@@ -24,7 +23,7 @@ export const signUp = async (formData: SignUpFormData) => {
       where: { email },
     });
     if (existingUser)
-      return { status: "fail", message: "this email is already in use" };
+      return { success: false, message: "This email is already in use" };
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -44,10 +43,9 @@ export const signUp = async (formData: SignUpFormData) => {
       },
     };
   } catch (error) {
-    console.error("SIGNUP_ERROR", error);
     return {
       status: "error",
-      message: "Something went wrong. Please try again later.",
+      message: "Something went wrong. Please try again.",
     };
   }
 };
@@ -73,7 +71,7 @@ export const logIn = async (formData: LoginForm) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { success: false, error: "Invalid email or password" };
+          return { success: false, error: "This email is already in use." };
         default:
           return {
             success: false,
@@ -87,7 +85,6 @@ export const logIn = async (formData: LoginForm) => {
 };
 export const logout = async () => {
   try {
-
     await signOut({ redirectTo: "/login" });
     return { success: true }; // never actually reached — signOut always redirects on success
   } catch (err) {

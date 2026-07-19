@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import ProfileNavItem from "@/components/layout/main/profileNavItem";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,13 @@ import { Separator } from "@/components/ui/separator";
 import { LogOut } from "lucide-react";
 import { ReactNode } from "react";
 
-export default function ProfileLayout({ children }: { children: ReactNode }) {
+export default async function ProfileLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const session = await auth();
+  const user = session?.user;
   return (
     <section>
       <div className="grid grid-cols-12 gap-5 ">
@@ -20,10 +27,8 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
               />
               <AvatarFallback>Profile image</AvatarFallback>
             </Avatar>
-            <h5 className="text-xl font-semibold">Omid Agazadeh</h5>
-            <span className="text-muted-foreground text-sm">
-              dimo.steamre@gmail.com
-            </span>
+            <h5 className="text-xl font-semibold">{user.fullName}</h5>
+            <span className="text-muted-foreground text-sm">{user.email}</span>
           </div>
           <div className="flex flex-col items-center gap-2 mt-10 justify-center w-full *:w-full *:h-11">
             <ProfileNavItem />

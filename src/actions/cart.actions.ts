@@ -20,7 +20,7 @@ export async function addToCart(productId: string) {
     });
 
     if (cartItem && cartItem.quantity >= product.stock) {
-      return { success: false, message: "Maximum available quantity reached." };
+      return { success: false, message: "You've reached the maximum available quantity." };
     }
     const result = await prisma.cartItem.upsert({
       where: { userId_productId: { userId, productId } },
@@ -34,8 +34,6 @@ export async function addToCart(productId: string) {
       cartItem: result,
     };
   } catch (err) {
-    console.error(err);
-
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -61,10 +59,9 @@ export async function removeFromCart(cartItemId: string) {
       message: "Item removed from cart successfully.",
     };
   } catch (err) {
-    console.error(err);
     return {
       success: false,
-      message: "Please sign in to remove items from your cart.",
+      message: "Something went wrong. Please try again.",
     };
   }
 }
@@ -85,7 +82,7 @@ export async function incrementFromCart(cartItemId: string) {
     if (cartItem.quantity >= cartItem.product.stock) {
       return {
         success: false,
-        message: "Maximum available quantity reached.",
+        message: "You've reached the maximum available quantity.",
       };
     }
 
@@ -101,7 +98,6 @@ export async function incrementFromCart(cartItemId: string) {
       cartItem: result,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -138,7 +134,6 @@ export async function decrementFromCart(cartItemId: string) {
       cartItem: result,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: "Something went wrong. Please try again.",

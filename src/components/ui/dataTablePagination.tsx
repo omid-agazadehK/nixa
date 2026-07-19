@@ -15,7 +15,6 @@ type Props = {
 };
 
 export function DataTablePagination({ page, totalPages, baseUrl }: Props) {
-  console.log(totalPages)
   return (
     <div className="flex items-center justify-end space-x-2 py-4 px-2">
       <Pagination>

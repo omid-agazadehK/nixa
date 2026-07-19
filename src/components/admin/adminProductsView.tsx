@@ -16,7 +16,7 @@ export default async function AdminProductsView({
     take: limit,
   });
   return (
-    <div>
+    <section>
       <div className="mb-6">
         <h2 className="text-2xl font-bold tracking-tight">Products</h2>
         <p className="text-sm text-muted-foreground">
@@ -36,6 +36,6 @@ export default async function AdminProductsView({
         page={page}
         totalPages={totalPages}
       />
-    </div>
+    </section>
   );
 }

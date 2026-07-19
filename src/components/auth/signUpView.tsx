@@ -52,7 +52,6 @@ export default function SignUpView() {
       }
       toast.error(res.message);
     } catch (error) {
-      console.error("SIGNUP_FORM", error);
       toast.error("Something went wrong!");
     }
   };

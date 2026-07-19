@@ -1,3 +1,4 @@
+"use client";
 import Logo from "@/components/shared/logo";
 import {
   Sidebar,
@@ -14,18 +15,18 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { isActive } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
-const data = {
+const sidebarData = {
   navMain: [
     {
       title: "Menu",
-      url: "#",
       items: [
         {
           title: "Dashboard",
           url: "/admin/dashboard",
-          isActive: true,
         },
         {
           title: "Products",
@@ -39,11 +40,12 @@ const data = {
     },
   ],
 };
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const pathname = usePathname();
   return (
     <SidebarProvider>
       <Sidebar variant="inset">
@@ -53,14 +55,17 @@ export default async function AdminLayout({
           </div>
         </SidebarHeader>
         <SidebarContent>
-          {data.navMain.map((item) => (
+          {sidebarData.navMain.map((item) => (
             <SidebarGroup key={item.title}>
               <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
               <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu >
                   {item.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild isActive={item.isActive}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive(pathname, item.url)}
+                      >
                         <Link href={item.url}>{item.title}</Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

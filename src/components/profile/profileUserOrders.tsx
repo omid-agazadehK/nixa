@@ -2,7 +2,6 @@ import { auth } from "@/auth";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -35,10 +34,9 @@ export default async function ProfileUserOrders() {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   console.log(userOrders);
   return (
-    <section className="lg:col-span-9 md:col-span-8 col-span-12 bg-card rounded-xl shadow h-fit md:px-7.5 md:py-10 ">
+    <div className="lg:col-span-9 md:col-span-8 col-span-12 bg-card rounded-xl border shadow h-fit md:p-8 p-2 ">
       <Table className="border">
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
+        <TableHeader >
           <TableRow>
             <TableHead className="w-25">Id</TableHead>
             <TableHead>Status</TableHead>
@@ -62,7 +60,7 @@ export default async function ProfileUserOrders() {
                 </Badge>
               </TableCell>
               <TableCell>{formatDate(order.createdAt)}</TableCell>
-              <TableCell className="text-right">{order.totalPrice}</TableCell>
+              <TableCell>{order.totalPrice.toFixed(2)}</TableCell>
               <TableCell className="text-right">
                 <Sheet>
                   <SheetTrigger asChild>
@@ -134,7 +132,7 @@ export default async function ProfileUserOrders() {
                         ))}
                         <div className="bg-muted border rounded text-sm flex items-center justify-between px-4 py-3 w-full">
                           <span>Total</span>
-                          <span>${order.totalPrice}</span>
+                          <span>${order.totalPrice.toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
@@ -147,10 +145,14 @@ export default async function ProfileUserOrders() {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">
+              {userOrders
+                .reduce((sum, item) => sum + item.totalPrice, 0)
+                .toFixed(2)}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
-    </section>
+    </div>
   );
 }

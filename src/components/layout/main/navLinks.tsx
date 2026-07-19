@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../../ui/button";
+import { isActive } from "@/lib/utils";
 
 type NavItems = { title: string; href: string }[];
 const navItems: NavItems = [
@@ -17,8 +18,6 @@ const navItems: NavItems = [
 
 export default function NavLinks() {
   const pathName = usePathname();
-  const isActive = (href: string) =>
-    href === "/" ? pathName === "/" : pathName.startsWith(href);
 
   return (
     <nav>
@@ -26,11 +25,11 @@ export default function NavLinks() {
         <Button
           key={nav.href}
           asChild
-          variant={isActive(nav.href) ? "secondary" : "ghost"}
+          variant={isActive(pathName,nav.href) ? "secondary" : "ghost"}
         >
           <Link className="relative" href={nav.href}>
             {nav.title}
-            {isActive(nav.href) && (
+            {isActive(pathName,nav.href) && (
               <span className="absolute bottom-0 left-1/2  h-0.5 w-6 bg-primary -translate-x-1/2"></span>
             )}
           </Link>

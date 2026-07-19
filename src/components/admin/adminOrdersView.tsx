@@ -14,10 +14,9 @@ export default async function AdminOrdersView({ pageParam }: { pageParam: string
     take: limit,
   });
   return (
-    <div>
+    <section>
       <div className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Orders</h1>
-
         <p className="text-muted-foreground text-sm">
           View and manage all customer orders from your store.
         </p>
@@ -30,6 +29,6 @@ export default async function AdminOrdersView({ pageParam }: { pageParam: string
         filterColumn="fullName"
         baseUrl="/admin/orders"
       />
-    </div>
+    </section>
   );
 }

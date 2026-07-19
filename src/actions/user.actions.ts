@@ -19,7 +19,7 @@ export async function updateUserProfile(data: UserFormValues) {
     };
   }
   const { firstName, lastName, email, address, phone } = validatedFields.data;
-  const fullName=`${firstName} ${lastName}`
+  const fullName = `${firstName} ${lastName}`;
   try {
     await prisma.user.update({
       where: { id: userId },
@@ -33,10 +33,9 @@ export async function updateUserProfile(data: UserFormValues) {
 
     return {
       success: true,
-      message: "Profile updated successfully!",
+      message: "Profile updated successfully.",
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: "Something went wrong. Please try again later.",

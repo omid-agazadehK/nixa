@@ -31,13 +31,13 @@ export async function order(formData: CheckOutForm) {
     if (outOfStockItem) {
       return {
         success: false,
-        message: `${outOfStockItem.product.name} does not have enough stock`,
+        message: `${outOfStockItem.product.name} is out of stock.`,
       };
     }
     if (cartItems.length === 0) {
       return {
         success: false,
-        message: "Your cart is empty",
+        message: "Your cart is empty.",
       };
     }
     const totalPrice = cartItems.reduce(
@@ -89,13 +89,15 @@ export async function order(formData: CheckOutForm) {
       return order;
     });
   } catch (error) {
-    console.error(error);
-    return { success: false, message: "Something went wrong" };
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
   if (!orderId) {
     return {
       success: false,
-      message: "Something went wrong",
+      message: "Something went wrong. Please try again.",
     };
   }
 
@@ -116,7 +118,9 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
       message: `#${result.id.slice(0, 8)} updated to ${result.status.toLowerCase()}`,
     };
   } catch (error) {
-    console.error(error);
-    return { success: false, message: "Something went wrong" };
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
 }

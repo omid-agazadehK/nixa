@@ -1,28 +1,16 @@
-'use client' 
- 
-import { useEffect } from 'react'
- 
+"use client";
+
 export default function ErrorPage({
   error,
   unstable_retry,
 }: {
-  error: Error & { digest?: string }
-  unstable_retry: () => void
+  error: Error & { digest?: string };
+  unstable_retry: () => void;
 }) {
-  useEffect(() => {
-    console.error(error)
-  }, [error])
- 
   return (
     <div>
       <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          () => unstable_retry()
-        }
-      >
-        Try again
-      </button>
+      <button onClick={() => unstable_retry()}>Try again</button>
     </div>
-  )
+  );
 }

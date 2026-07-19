@@ -1,29 +1,10 @@
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
-import { LogIn, ShoppingCart, User, UserRoundCog } from "lucide-react";
-import Link from "next/link";
-import { UserRole } from "@prisma/client";
 import Logo from "@/components/shared/logo";
+import { Suspense } from "react";
+import HeaderActions from "./headerActions";
+import HeaderActionsSkeleton from "./headerActionsSkeleton";
 import NavLinks from "./navLinks";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import AccountActions from "./accountActions";
 
 export default async function MainHeader() {
-  const session = await auth();
-  const userId = session?.user?.id;
-  console.log(session);
-
-  const cartQuantity = userId
-    ? await prisma.cartItem.aggregate({
-        where: { userId },
-        _sum: {
-          quantity: true,
-        },
-      })
-    : null;
-  const cartItemsCount = cartQuantity?._sum.quantity ?? 0;
-
   return (
     <header className="border-border bg-background/20 sticky top-0 z-50 hidden w-full border-b px-2 backdrop-blur-lg sm:block">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
@@ -31,43 +12,9 @@ export default async function MainHeader() {
           <Logo variant="small" />
           <NavLinks />
         </div>
-        <div className="flex items-center gap-x-3">
-          <Button variant="outline" className="relative" size="icon-lg" asChild>
-            <Link href="/cart">
-              <ShoppingCart fill="" />
-              {cartItemsCount > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-                  {cartItemsCount}
-                </span>
-              )}
-            </Link>
-          </Button>
-          <Separator orientation="vertical" />
-          {!session?.user && (
-            <div className="flex items-center gap-x-2">
-              <Button variant="outline" asChild size={"lg"}>
-                <Link href={"/login"}>
-                  <LogIn />
-                  Login
-                </Link>
-              </Button>
-              <Button asChild size={"lg"}>
-                <Link href={"/signup"}>
-                  <User />
-                  SignUp
-                </Link>
-              </Button>
-            </div>
-          )}
-          {session?.user && <AccountActions user={session.user} />}
-          {session?.user?.role === UserRole.ADMIN && (
-            <Button asChild size="icon-lg">
-              <Link href="/admin/dashboard">
-                <UserRoundCog />
-              </Link>
-            </Button>
-          )}
-        </div>
+        <Suspense fallback={<HeaderActionsSkeleton />}>
+          <HeaderActions />
+        </Suspense>
       </div>
     </header>
   );
