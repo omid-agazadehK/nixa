@@ -1,4 +1,6 @@
+import { MobileNavRoutes } from "@/types";
 import { OrderStatus } from "@prisma/client";
+import { House, ShoppingBag, ShoppingBasket } from "lucide-react";
 
 export const ORDER_STATUS = {
   [OrderStatus.DELIVERED]: {
@@ -20,3 +22,21 @@ export const ORDER_STATUS = {
     style: string;
   }
 >;
+
+export const mobileNavRoutes: MobileNavRoutes[] = [
+  {
+    title: "Home",
+    href: "/",
+    icon: "House",
+  },
+  {
+    title: "Shop",
+    href: "/shop",
+    icon: "ShoppingBag",
+  },
+  {
+    title: "Cart",
+    href: "/cart",
+    icon: "ShoppingBasket",
+  },
+];

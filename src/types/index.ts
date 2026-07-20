@@ -80,3 +80,8 @@ export type SuccessSearchParams = {
 };
 export type AdminProductFormType = z.infer<typeof adminProductSchema>;
 export type UserFormValues = z.infer<typeof UserProfileFormSchema>;
+export interface MobileNavRoutes {
+  title: string;
+  href: string;
+  icon: "House" | "ShoppingBag" | "ShoppingBasket";
+}

@@ -1,27 +1,30 @@
-import { UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import type { Session, User } from "next-auth";
 import NextAuth from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       if (user) {
-        token.id = user.id;
+        if (typeof user.id === "string") {
+          token.id = user.id;
+        }
         token.role = user.role;
         token.fullName = user.fullName;
-        token.image = user.image;
+        token.email = user.email;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as UserRole;
+        session.user.id = token.id;
+        session.user.role = token.role;
         session.user.fullName = token.fullName;
-        session.user.image = token.image;
+        session.user.email = token.email;
       }
       return session;
     },
