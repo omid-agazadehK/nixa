@@ -34,18 +34,22 @@ export default function AccountActions({
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>
+            {user.fullName.slice(0, 2).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-4 w-65 p-2">
         <DropdownMenuGroup className="flex items-center justify-start">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              {user.fullName.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div>
             <DropdownMenuLabel className="text-foreground py-0.5">
-              {user.name}
+              {user.fullName}
             </DropdownMenuLabel>
             <DropdownMenuLabel className="py-0.5">
               {user.email}
@@ -56,7 +60,7 @@ export default function AccountActions({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={"/profile"} className="flex items-center gap-x-2">
+            <Link href={"/account"} className="flex items-center gap-x-2">
               <User />
               Profile
             </Link>
