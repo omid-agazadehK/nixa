@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useState } from "react";
 const accountLinks = [
   {
-    label: "Profile",
+    label: "Account",
     href: "/account",
     icon: User,
   },

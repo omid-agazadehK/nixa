@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <Card className="max-w-lg mx-auto">
+    <Card className="max-w-lg mx-auto mt-10">
       <CardHeader className="flex items-center flex-col gap-3">
         <Skeleton className="w-31.25 h-31.25 rounded-full" />
         

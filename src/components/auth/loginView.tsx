@@ -35,6 +35,11 @@ export default function LoginView() {
   } = useForm<LoginForm>(formOptions);
 
   const onSubmit = async (formData: LoginForm) => {
+    try {
+      
+    } catch (error) {
+      
+    }
     const res = await logIn(formData);
     if (!res.success) {
       toast.error(res.message);

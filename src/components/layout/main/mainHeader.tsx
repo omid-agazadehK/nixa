@@ -1,7 +1,5 @@
 import Logo from "@/components/shared/logo";
-import { Suspense } from "react";
 import HeaderActions from "./headerActions";
-import HeaderActionsSkeleton from "./headerActionsSkeleton";
 import NavLinks from "./navLinks";
 
 export default function MainHeader() {
@@ -12,9 +10,7 @@ export default function MainHeader() {
           <Logo variant="small" />
           <NavLinks />
         </div>
-        <Suspense fallback={<HeaderActionsSkeleton />}>
-          <HeaderActions />
-        </Suspense>
+        <HeaderActions />
       </div>
     </header>
   );

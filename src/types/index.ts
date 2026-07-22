@@ -3,7 +3,7 @@ import {
   checkoutSchema,
   loginSchema,
   signUpSchema,
-  UserProfileFormSchema,
+  UserAccountFormSchema,
 } from "@/lib/schema";
 import { Category, Prisma } from "@prisma/client";
 import z from "zod";
@@ -38,6 +38,7 @@ export type ShopSearchParams = {
   sort?: SortKey;
   category?: string;
   q?: string;
+  page:string
 };
 export type SortKey = "price-asc" | "price-desc" | "newest";
 //
@@ -79,7 +80,7 @@ export type SuccessSearchParams = {
   searchParams: { orderId: string };
 };
 export type AdminProductFormType = z.infer<typeof adminProductSchema>;
-export type UserFormValues = z.infer<typeof UserProfileFormSchema>;
+export type UserFormValues = z.infer<typeof UserAccountFormSchema>;
 export interface MobileNavRoutes {
   title: string;
   href: string;

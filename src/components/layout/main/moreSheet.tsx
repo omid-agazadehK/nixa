@@ -1,54 +1,68 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Ellipsis, LogOut, User } from "lucide-react";
+import { Ellipsis, Info, Phone } from "lucide-react";
 import Link from "next/link";
+import { Fragment, useState } from "react";
+
+const moreMenuItems = [
+  {
+    label: "About us",
+    href: "/about",
+    icon: Info,
+  },
+  {
+    label: "Contact us",
+    href: "/contact",
+    icon: Phone,
+  },
+];
+
 export default function MoreSheet() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="hover: col-span-1 flex h-full w-full flex-col items-center justify-center ">
-      <Sheet>
+    <div className="col-span-1 flex h-full w-full flex-col items-center justify-center ">
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger className="flex flex-col items-center gap-1 text-muted-foreground">
           <Ellipsis size={20} strokeWidth={1.5} />
           more
         </SheetTrigger>
         <SheetContent side="left">
           <SheetHeader>
-            <SheetTitle>
-              <div>
-                <Avatar size="lg">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <span className="text-foreground">omid agazadeh</span>
-                  <span className="text-sm font-light">
-                    omidagazadeh.dev@gmail.com
-                  </span>
-                </div>
-              </div>
-            </SheetTitle>
+            <SheetTitle>More</SheetTitle>
+            <SheetDescription>Explore more options</SheetDescription>
           </SheetHeader>
-          <div className="mt-4 flex flex-col gap-y-3 px-4 text-lg">
-            <Link href={"/cart"} className="flex items-center gap-x-2">
-              <User />
-              Account settings
-            </Link>
-            <Separator />
-            <span className="flex items-center gap-x-2">
-              <LogOut className="text-muted-foreground" />
-              sign out
-            </span>
+          <div className="mt-6 flex flex-col gap-y-3 px-4 text-lg">
+            {moreMenuItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <Fragment key={item.href} >
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-x-2 px-4 py-3 text-sm transition-colors hover:text-foreground"
+                  >
+                    <Icon
+                      size={20}
+                      className="text-muted-foreground"
+                      strokeWidth={1.5}
+                    />
+                    {item.label}
+                  </Link>
+                  <Separator />
+                </Fragment>
+              );
+            })}
           </div>
         </SheetContent>
       </Sheet>

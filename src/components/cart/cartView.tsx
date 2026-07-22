@@ -14,7 +14,7 @@ export default async function CartView() {
   });
 
   return (
-    <section className="grid grid-cols-12 gap-x-4  mt-4 md:mt-0">
+    <section className="grid grid-cols-12 mt-5 gap-x-4  ">
       <CartItems cartItems={cartItems} />
       <CartSummary cartItems={cartItems} />
     </section>

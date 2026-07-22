@@ -15,6 +15,7 @@ import { SignUpFormData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, UseFormProps } from "react-hook-form";
 import { toast } from "sonner";
 import FormInput from "../shared/FormInput";
@@ -37,7 +38,7 @@ export default function SignUpView() {
     control,
     formState: { isSubmitting },
   } = useForm<SignUpFormData>(formOptions);
-
+  const router = useRouter();
   const onSubmit = async (formData: SignUpFormData) => {
     try {
       const res = await signUp(formData);
@@ -46,8 +47,9 @@ export default function SignUpView() {
         await signIn("credentials", {
           email: formData.email,
           password: formData.password,
-          redirectTo: "/",
+          redirect: false,
         });
+        router.replace("/");
         return;
       }
       toast.error(res.message);

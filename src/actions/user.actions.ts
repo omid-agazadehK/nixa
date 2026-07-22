@@ -1,16 +1,17 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { UserProfileFormSchema } from "@/lib/schema";
+import { UserAccountFormSchema } from "@/lib/schema";
 import { requireUserId } from "@/lib/utils";
 import { UserFormValues } from "@/types";
+import { revalidatePath } from "next/cache";
 export type StateAction = {
   status: boolean;
   message?: string;
 };
-export async function updateUserProfile(data: UserFormValues) {
+export async function updateUserAccountInfo(data: UserFormValues) {
   const userId = await requireUserId();
-  const validatedFields = UserProfileFormSchema.safeParse(data);
+  const validatedFields = UserAccountFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -30,10 +31,10 @@ export async function updateUserProfile(data: UserFormValues) {
         phone,
       },
     });
-
+    revalidatePath("/account");
     return {
       success: true,
-      message: "Profile updated successfully.",
+      message: "Account info updated successfully.",
     };
   } catch (error) {
     return {

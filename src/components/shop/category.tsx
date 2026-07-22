@@ -27,7 +27,7 @@ export default function Category() {
   }
 
   return (
-    <div className="col-span-2">
+    <div className="col-span-6">
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="w-30">
           <Button

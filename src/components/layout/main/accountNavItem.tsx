@@ -5,29 +5,29 @@ import { Handbag, LucideIcon, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../../ui/button";
-const profileLinks: {
+const accountLinks: {
   href: string;
   title: string;
   icon: LucideIcon;
   exact?: boolean;
 }[] = [
   {
-    href: "/profile",
-    title: "Profile",
+    href: "/account",
+    title: "Account",
     icon: User,
     exact: true,
   },
   {
-    href: "/profile/order",
+    href: "/account/orders",
     title: "Order",
     icon: Handbag,
   },
 ];
-export default function ProfileNavItem() {
+export default function AccountNavItem() {
   const pathName = usePathname();
   return (
     <>
-      {profileLinks.map((item) => {
+      {accountLinks.map((item) => {
         const Icon = item.icon;
 
         return (

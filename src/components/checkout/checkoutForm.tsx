@@ -68,7 +68,7 @@ export default function CheckoutForm() {
             <FormInput
               control={control}
               name="phone"
-              placeholder="+98 *** *** ****"
+              placeholder="+1 (555) 000-000"
               label="mobile"
               autoComplete="tel"
               type="tel"

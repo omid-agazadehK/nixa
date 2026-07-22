@@ -5,7 +5,7 @@ import OrderSummarySkeleton from "./orderSummarySkeleton";
 
 export default function CheckoutpView() {
   return (
-    <section className="grid grid-cols-12 gap-5">
+    <section className="grid grid-cols-12 gap-5 mt-10">
       <CheckoutForm />
       <Suspense fallback={<OrderSummarySkeleton />}>
         <OrderSummary />

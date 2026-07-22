@@ -193,7 +193,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
                     <Button
                       key={status}
                       variant="outline"
-                      className={`cursor-pointer ${OrderStatus[status] === order.status ? config.style : ""}
+                      className={` ${OrderStatus[status] === order.status ? config.style : ""}
                     `}
                       onClick={() => statusHandler(order.id, status)}
                     >

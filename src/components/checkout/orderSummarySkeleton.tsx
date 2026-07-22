@@ -3,7 +3,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function OrderSummarySkeleton() {
   return (
-    <div className="order-1 md:order-2 md:col-span-6 col-span-12   bg-card sm:py-6 py-4 px-3 sm:px-10 rounded-md border drop-shadow-md h-fit flex flex-col md:gap-y-4 gap-4">
+    <div className="order-1 md:order-2 md:col-span-6 col-span-12 mt-10   bg-card sm:py-6 py-4 px-3 sm:px-10 rounded-md border drop-shadow-md h-fit flex flex-col md:gap-y-4 gap-4">
       <Skeleton className="w-24 h-5"></Skeleton>
       <div className="flex items-start gap-4">
         <Skeleton className="size-10"></Skeleton>

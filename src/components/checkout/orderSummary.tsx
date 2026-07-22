@@ -26,13 +26,15 @@ export default async function OrderSummary() {
               className="flex items-center w-full justify-between gap-4 "
             >
               <div className="flex items-center gap-4">
-                <Image
-                  src={item.product.images[0]}
-                  alt={item.product.name}
-                  width={50}
-                  height={50}
-                  className="rounded-2xl"
-                />
+                <div className="relative size-20  text-xs">
+                  <Image
+                    src={item.product.images[0]}
+                    alt={item.product.name}
+                    fill
+                    sizes="80px"
+                    className="rounded-xl object-cover"
+                  />
+                </div>
                 <div className="space-y-1 py-3">
                   <p className="font-medium md:text-base text-sm">
                     {item.product.name}

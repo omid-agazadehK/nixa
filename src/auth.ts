@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import type { Session, User } from "next-auth";
+import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
@@ -8,7 +8,7 @@ import { prisma } from "./lib/prisma";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: User }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         if (typeof user.id === "string") {
           token.id = user.id;
@@ -17,6 +17,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.fullName = user.fullName;
         token.email = user.email;
       }
+      if (trigger === "update") {
+        if (session.fullName) token.fullName = session.fullName;
+        if (session.email) token.email = session.email;
+      }
+
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {

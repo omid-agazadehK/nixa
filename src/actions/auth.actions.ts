@@ -71,11 +71,11 @@ export const logIn = async (formData: LoginForm) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { success: false, error: "This email is already in use." };
+          return { success: false, message: "Invalid email or password." };
         default:
           return {
             success: false,
-            error: "Something went wrong. Please try again.",
+            message: "Something went wrong. Please try again.",
           };
       }
     }
@@ -86,7 +86,6 @@ export const logIn = async (formData: LoginForm) => {
 export const logout = async () => {
   try {
     await signOut({ redirectTo: "/login" });
-    return { success: true }; // never actually reached — signOut always redirects on success
   } catch (err) {
     if (isRedirectError(err)) throw err;
     return {

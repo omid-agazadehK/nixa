@@ -119,7 +119,7 @@ export const productColumns: ColumnDef<ProductWithCategory>[] = [
               <Link href={`/admin/products/${product.id}/edit`}>Edit</Link>
             </DropdownMenuItem>
             <AlertDialog>
-              <AlertDialogTrigger className="cursor-pointer" asChild>
+              <AlertDialogTrigger  asChild>
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   Delete
                 </DropdownMenuItem>

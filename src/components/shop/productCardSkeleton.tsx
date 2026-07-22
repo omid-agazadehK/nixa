@@ -7,7 +7,7 @@ export default function ProductCardSkeleton() {
       {[...Array(4)].map((_, i) => (
         <Card
           key={i}
-          className="w-full xs:col-span-1 col-span-2 border border-border"
+          className="w-full lg:col-span-2 sm:col-span-3  col-span-4  border border-border"
         >
           <CardHeader>
             <Skeleton className="aspect-video w-full" />

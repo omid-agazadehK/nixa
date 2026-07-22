@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import CartControls from "../shared/cartControls";
 import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
 import AddToCartButton from "./addToCartButton";
 
 export default async function ProductDetailsView({
@@ -38,40 +38,49 @@ export default async function ProductDetailsView({
       },
     });
   }
+  const isOutOfStock = product.stock <= 0;
   return (
-    <section>
-      <div className="grid  grid-cols-12 relative gap-x-10 bg-card  rounded-2xl shadow  overflow-hidden">
-        <div className="sticky sm:h-100 h-80 lg:h-auto lg:col-span-5 col-span-12 md:left-0 top-0 object-cover">
-          <Image
-            src={product?.images[0]}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            loading="eager"
-            alt={product.name}
-          />
-        </div>
-        <div className="flex p-4 lg:col-span-7 col-span-12 flex-col md:gap-5 gap-3 w-full ">
-          <div>
-            <h2 className="md:text-2xl text-xl mb-4 font-bold ">{product.name}</h2>
-            <Badge variant={"secondary"}>{product.category.name}</Badge>
-          </div>
-          <Separator />
-          <div className="flex flex-col gap-y-5">
-            <span className=" text-base md:text-lg">DESCRIPTION</span>
-            <span className="mdLtext-base text-sm">{product.description}</span>
-          </div>
-          <Separator />
+    <section className="mt-10 flex md:flex-row flex-col  justify-between  relative gap-x-5 bg-card rounded-2xl shadow-xl overflow-hidden ">
+      <div className="relative w-full md:w-2/5 lg:w-1/3 h-64 md:h-auto shrink-0">
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+      </div>
+      <div className="flex items-start px-4 py-10  flex-col md:gap-7 gap-3 max-w-200 w-full ">
+        <Badge variant="secondary" className="text-sm uppercase font-semibold">
+          {product.category.name}
+        </Badge>
+        <h2 className="md:text-3xl text-xl font-bold ">{product.name}</h2>
+        <Badge
+          className={cn(
+            "rounded-full p-3.5 text-sm",
+            isOutOfStock && "bg-red-300/30 text-red-700",
+            !isOutOfStock && "bg-emerald-300/30 text-emerald-700",
+          )}
+        >
+          <span
+            className={cn(
+              "size-2 animate-pulse rounded-full",
+              isOutOfStock && "bg-red-700",
+              !isOutOfStock && "bg-emerald-700",
+            )}
+          ></span>
+          {isOutOfStock ? "Out Of Stock (Unavailable)" : "In Stock (Available)"}
+        </Badge>
+        <p className="font-light">{product.description}</p>
 
-          <div className="flex flex-col gap-y-5">
-            <span className="tracking-wide text-sm md:text-base">PRICE</span>
-            <span className="md:text-4xl text-2xl font-bold ">
-              ${product.price.toFixed(2)}
-            </span>
-          </div>
-          {!cartItem && <AddToCartButton id={product.id} />}
-          <div className=" flex items-center gap-4">
-            {cartItem && <CartControls item={cartItem} />}
-          </div>
+        <span className="md:text-4xl text-2xl font-extrabold ">
+          ${product.price.toFixed(2)}
+        </span>
+        {!cartItem && (
+          <AddToCartButton isDisable={isOutOfStock} id={product.id} />
+        )}
+        <div className=" flex items-center gap-4">
+          {cartItem && <CartControls item={cartItem} />}
         </div>
       </div>
     </section>

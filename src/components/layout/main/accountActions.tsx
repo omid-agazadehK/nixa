@@ -14,7 +14,6 @@ import { Loader2, LogOut, User } from "lucide-react";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import { MouseEvent, useTransition } from "react";
-import { toast } from "sonner";
 
 export default function AccountActions({
   user,
@@ -25,13 +24,12 @@ export default function AccountActions({
   const signOutHandler = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     startTransition(async () => {
-      const res = await logout();
-      if (!res.success) toast.error(res.message);
+      await logout();
     });
   };
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="cursor-pointer">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>
@@ -62,7 +60,7 @@ export default function AccountActions({
           <DropdownMenuItem asChild>
             <Link href={"/account"} className="flex items-center gap-x-2">
               <User />
-              Profile
+              Account Details{" "}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />

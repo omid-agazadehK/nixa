@@ -27,23 +27,25 @@ export default async function SuccessView({
     notFound();
   }
   return (
-    <Card className="max-w-lg mx-auto">
-      <CardHeader className="flex items-center flex-col gap-3">
-        <CircleCheck className="text-green-500" size={125} />
-        <CardTitle>Order Confirmed! 🎉</CardTitle>
-        <CardDescription>Thank you for your purchase!</CardDescription>
-      </CardHeader>
+    <section className="flex-1 h-full flex items-center justify-center">
+      <Card className="min-w-lg">
+        <CardHeader className="flex items-center flex-col gap-3">
+          <CircleCheck className="text-green-500" size={125} />
+          <CardTitle className="text-2xl">Order Confirmed! 🎉</CardTitle>
+          <CardDescription className="text-lg">Thank you for your purchase!</CardDescription>
+        </CardHeader>
 
-      <CardContent className="text-center">
-        <p>Order #{order.id}</p>
-        <p>Total: ${order.totalPrice.toFixed(2)}</p>
-      </CardContent>
+        <CardContent className="text-center">
+          <p>Order #{order.id}</p>
+          <p>Total: ${order.totalPrice.toFixed(2)}</p>
+        </CardContent>
 
-      <CardFooter>
-        <Button asChild className="w-full sm:text-base h-10" size="lg">
-          <Link href="/shop">Continue Shopping</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+        <CardFooter>
+          <Button asChild className="w-full sm:text-base h-10" size="lg">
+            <Link href="/shop" replace>Continue Shopping</Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </section>
   );
 }

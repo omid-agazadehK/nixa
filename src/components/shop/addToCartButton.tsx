@@ -5,7 +5,13 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 
-export default function AddToCartButton({ id }: { id: string }) {
+export default function AddToCartButton({
+  id,
+  isDisable = false,
+}: {
+  id: string;
+  isDisable: boolean;
+}) {
   const [isPending, startTransition] = useTransition();
   const addtoCarta = () => {
     startTransition(async () => {
@@ -20,8 +26,9 @@ export default function AddToCartButton({ id }: { id: string }) {
   return (
     <Button
       onClick={addtoCarta}
+      disabled={isDisable}
       size={"lg"}
-      className="cursor-pointer max-w-50 md:h-16 h-10 rounded-none md:text-lg text-sm"
+      className=" max-w-lg w-full md:h-16 h-10  md:text-lg text-sm"
     >
       {isPending ? <Spinner className="md:size-6 size-4" /> : "ADD TO CART"}
     </Button>

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <div className="grid grid-cols-12 gap-x-4 ">
+    <div className="grid grid-cols-12 gap-x-4 mt-10 ">
       <div className="xl:col-span-4 order-1 md:order-2 md:col-span-5 col-span-12  bg-card sm:py-6 py-4 px-5 sm:px-10 rounded-md border drop-shadow-md h-fit flex flex-col md:gap-y-4 gap-4">
         <Skeleton className="w-24 h-5"></Skeleton>
         <div className="flex items-start justify-between">

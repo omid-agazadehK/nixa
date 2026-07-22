@@ -1,25 +1,15 @@
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+"use client";
+import { User } from "@prisma/client";
+import { useState } from "react";
 import AccountForm from "./accountForm";
+import AccountInfo from "./accountInfo";
 
-export default async function AccountView() {
-  const session = await auth();
-  const user = await prisma.user.findUnique({
-    where: { id: session?.user?.id },
-  });
-  if (!user) {
-    throw new Error("User not found");
-  }
+export default function AccountView({ user }: { user: User }) {
+  const [isEdit, setIsEdit] = useState(false);
   return (
-    <Card className="lg:col-span-9 md:col-span-8 col-span-12 bg-card rounded-xl shadow h-fit md:px-7.5 md:py-10 border-none ring-0   ">
-      <CardHeader>
-        <CardTitle className="md:text-3xl text-xl ">
-          Personal Information
-        </CardTitle>
-        <CardDescription>Update your account detials</CardDescription>
-      </CardHeader>
-      <AccountForm user={user} />
-    </Card>
+    <>
+      {!isEdit && <AccountInfo setIsEdit={setIsEdit} user={user} />}
+      {isEdit && <AccountForm user={user} setIsEdit={setIsEdit} />}
+    </>
   );
 }

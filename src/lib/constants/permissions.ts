@@ -1,7 +1,7 @@
 export const protectedRoutes = [
   "/cart",
   "/checkout",
-  "/profile",
+  "/account",
   "/orders",
 ];
 

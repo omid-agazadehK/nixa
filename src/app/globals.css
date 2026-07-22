@@ -53,47 +53,54 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.985 0.005 240); /* سفید رو به آبی بسیار روشن */
-  --foreground: oklch(0.25 0.03 250); /* آبی نفتی بسیار تیره به جای مشکی */
+  --radius: 0.625rem; /* گوشه‌های گرد برای حس نرمی پارچه‌ها */
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.03 250);
+  --background: oklch(
+    0.98 0.012 90
+  ); /* کرم روشن و گرم (عاجی) - به جای سفید سرد */
+  --foreground: oklch(
+    0.3 0.03 40
+  ); /* قهوه‌ای اسپرسو بسیار تیره - به جای مشکی */
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.03 250);
+  --card: oklch(1 0.005 90); /* سفید گرم برای کارت‌ها */
+  --card-foreground: oklch(0.3 0.03 40);
 
-  --primary: oklch(0.4 0.1 255); /* آبی نفتی عمیق و شیک */
-  --primary-foreground: oklch(0.98 0.01 240);
+  --popover: oklch(1 0.005 90);
+  --popover-foreground: oklch(0.3 0.03 40);
 
-  --secondary: oklch(0.93 0.02 240); /* طوسی مایل به آبی روشن */
-  --secondary-foreground: oklch(0.3 0.03 250);
+  --primary: oklch(0.5 0.13 35); /* سرامیک/راستِ عمیق و گرم (حس پارچه و چرم) */
+  --primary-foreground: oklch(0.98 0.012 90); /* متن روی سرامیک با رنگ کرم */
 
-  --muted: oklch(0.95 0.01 240);
-  --muted-foreground: oklch(0.55 0.03 250);
+  --secondary: oklch(0.93 0.018 85); /* بژ/شنی ملایم */
+  --secondary-foreground: oklch(0.35 0.04 40);
 
-  --accent: oklch(0.75 0.15 85); /* طلایی/کهربایی گرم و درخشان */
-  --accent-foreground: oklch(0.25 0.05 250);
+  --muted: oklch(0.95 0.015 90);
+  --muted-foreground: oklch(
+    0.55 0.03 40
+  ); /* قهوه‌ای مایل به خاکستری برای متن‌های کم‌رنگ */
 
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.9 0.015 240);
-  --input: oklch(0.9 0.015 240);
-  --ring: oklch(0.75 0.15 85); /* حلقه فوکس روی رنگ طلایی */
+  --accent: oklch(0.8 0.12 85); /* برنجی/طلایی کهنه (رنگ پایه مبل‌های کلاسیک) */
+  --accent-foreground: oklch(0.3 0.04 40);
 
-  --chart-1: oklch(0.55 0.12 255); /* آبی */
-  --chart-2: oklch(0.75 0.15 85); /* طلایی */
-  --chart-3: oklch(0.65 0.1 165); /* سبز فیروزه‌ای */
-  --chart-4: oklch(0.7 0.12 350); /* صورتی ملایم */
-  --chart-5: oklch(0.6 0.09 200); /* آبی روشن */
+  --destructive: oklch(0.55 0.22 25); /* قرمز آجری (متناسب با تم گرم) */
+  --border: oklch(0.9 0.015 80); /* بژ خیلی کم‌رنگ برای مرزها */
+  --input: oklch(0.9 0.015 80);
+  --ring: oklch(0.5 0.13 35); /* حلقه فوکس روی رنگ پرایمری */
 
-  --sidebar: oklch(0.97 0.01 240);
-  --sidebar-foreground: oklch(0.25 0.03 250);
-  --sidebar-primary: oklch(0.4 0.1 255);
-  --sidebar-primary-foreground: oklch(0.98 0.01 240);
-  --sidebar-accent: oklch(0.93 0.02 240);
-  --sidebar-accent-foreground: oklch(0.3 0.03 250);
-  --sidebar-border: oklch(0.9 0.015 240);
-  --sidebar-ring: oklch(0.75 0.15 85);
+  --chart-1: oklch(0.5 0.13 35); /* راست (سرامیک) */
+  --chart-2: oklch(0.8 0.12 85); /* طلایی */
+  --chart-3: oklch(0.6 0.08 160); /* سبز کهوه‌ای/زیتونی (ترکیب طبیعی با چوب) */
+  --chart-4: oklch(0.45 0.06 40); /* قهوه‌ای گردویی */
+  --chart-5: oklch(0.75 0.08 20); 
+
+  --sidebar: oklch(0.96 0.015 80); 
+  --sidebar-foreground: oklch(0.3 0.03 40);
+  --sidebar-primary: oklch(0.5 0.13 35);
+  --sidebar-primary-foreground: oklch(0.98 0.012 90);
+  --sidebar-accent: oklch(0.93 0.018 85);
+  --sidebar-accent-foreground: oklch(0.35 0.04 40);
+  --sidebar-border: oklch(0.9 0.015 80);
+  --sidebar-ring: oklch(0.5 0.13 35);
 }
 
 @layer base {

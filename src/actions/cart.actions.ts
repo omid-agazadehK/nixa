@@ -18,22 +18,32 @@ export async function addToCart(productId: string) {
     const cartItem = await prisma.cartItem.findUnique({
       where: { userId_productId: { userId, productId } },
     });
-
+    if (product.stock <= 0) {
+      return {
+        success: false,
+        message: "Out of stock.",
+      };
+    }
     if (cartItem && cartItem.quantity >= product.stock) {
-      return { success: false, message: "You've reached the maximum available quantity." };
+      return {
+        success: false,
+        message: "You've reached the maximum available quantity.",
+      };
     }
     const result = await prisma.cartItem.upsert({
       where: { userId_productId: { userId, productId } },
       update: { quantity: { increment: 1 } },
       create: { userId, productId, quantity: 1 },
     });
-    revalidatePath("/products/[slug]");
+    revalidatePath(`/products/${product.slug}`);
+    revalidatePath(`/products`);
+    revalidatePath(`/cart`);
     return {
       success: true,
       message: "Item added to cart successfully.",
       cartItem: result,
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -58,7 +68,7 @@ export async function removeFromCart(cartItemId: string) {
       success: true,
       message: "Item removed from cart successfully.",
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -79,6 +89,7 @@ export async function incrementFromCart(cartItemId: string) {
         message: "Cart item not found.",
       };
     }
+    console.log(cartItem.quantity, cartItem.product.stock);
     if (cartItem.quantity >= cartItem.product.stock) {
       return {
         success: false,
@@ -97,7 +108,7 @@ export async function incrementFromCart(cartItemId: string) {
       message: "Item quantity updated successfully.",
       cartItem: result,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -133,7 +144,7 @@ export async function decrementFromCart(cartItemId: string) {
       message: "Item quantity updated successfully.",
       cartItem: result,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Something went wrong. Please try again.",
