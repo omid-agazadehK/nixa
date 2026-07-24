@@ -1,12 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { adminProductSchema } from "@/lib/schema";
-import {
-  requireAdmin,
-  requireUserId,
-  slugify,
-  validateProductConstraints,
-} from "@/lib/utils";
+import { requireAdmin, slugify, validateProductConstraints } from "@/lib/utils";
 import { AdminProductFormType } from "@/types";
 import { revalidatePath } from "next/cache";
 
@@ -38,9 +33,14 @@ export async function createProduct(data: AdminProductFormType) {
         images: [image],
       },
     });
+    revalidatePath("/admin/products");
+    revalidatePath("/shop");
     return { success: true, message: "Product created successfully.", product };
-  } catch (error) {
-    return { success: false, message: "Something went wrong. Failed to create the product." };
+  } catch {
+    return {
+      success: false,
+      message: "Something went wrong. Failed to create the product.",
+    };
   }
 }
 
@@ -64,7 +64,7 @@ export async function updateProduct(id: string, data: AdminProductFormType) {
       return validationError;
     }
 
-    const product = await prisma.product.update({
+    const res = await prisma.product.update({
       where: { id },
       data: {
         name,
@@ -76,9 +76,15 @@ export async function updateProduct(id: string, data: AdminProductFormType) {
         images: [image],
       },
     });
+    revalidatePath("/admin/products");
+    revalidatePath("/shop");
 
-    return { success: true, message: "Product updated successfully.", product };
-  } catch (error) {
+    return {
+      success: true,
+      message: "Product updated successfully.",
+      product: res,
+    };
+  } catch {
     return { success: false, message: "Failed to update product." };
   }
 }
@@ -91,9 +97,10 @@ export async function deleteProduct(id: string) {
       data: { isActive: false },
     });
     revalidatePath("/admin/products");
+    revalidatePath("/shop");
 
     return { success: true, message: "Product deleted successfully.", res };
-  } catch (error) {
+  } catch {
     return { success: false, message: "Failed to delete product." };
   }
 }

@@ -2,7 +2,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function TableSkeleton() {
   return (
-    <div>
+    <div className="p-6 max-w-6xl w-full mx-auto space-y-6">
       <div className="mb-6 space-y-2">
         <Skeleton className="h-7 w-32" />
         <Skeleton className="h-4 w-72 " />

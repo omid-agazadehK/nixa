@@ -100,7 +100,7 @@ export async function order(formData: CheckOutForm) {
       message: "Something went wrong. Please try again.",
     };
   }
-
+  revalidatePath("/");
   redirect(`/checkout/success?orderId=${orderId}`);
 }
 

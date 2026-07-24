@@ -89,7 +89,6 @@ export async function incrementFromCart(cartItemId: string) {
         message: "Cart item not found.",
       };
     }
-    console.log(cartItem.quantity, cartItem.product.stock);
     if (cartItem.quantity >= cartItem.product.stock) {
       return {
         success: false,

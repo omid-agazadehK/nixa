@@ -5,14 +5,10 @@ import {
   signUpSchema,
   UserAccountFormSchema,
 } from "@/lib/schema";
-import { Category, Prisma } from "@prisma/client";
+import { Category, OrderStatus, Prisma } from "@prisma/client";
 import z from "zod";
 
-export enum OrderStatus {
-  PENDING,
-  DELIVERED,
-  CANCELLED,
-}
+
 
 export type Product = {
   category: Category;
@@ -38,7 +34,7 @@ export type ShopSearchParams = {
   sort?: SortKey;
   category?: string;
   q?: string;
-  page:string
+  page: string;
 };
 export type SortKey = "price-asc" | "price-desc" | "newest";
 //
@@ -86,3 +82,7 @@ export interface MobileNavRoutes {
   href: string;
   icon: "House" | "ShoppingBag" | "ShoppingBasket";
 }
+export type OrderStatusCount = {
+  status: OrderStatus;
+  _count: number;
+};

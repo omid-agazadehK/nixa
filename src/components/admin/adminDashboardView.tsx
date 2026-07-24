@@ -1,71 +1,89 @@
-import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/prisma";
-import { Box, ShoppingCart, TrendingUp, Users } from "lucide-react";
+import { Prisma } from "@prisma/client";
+import { DollarSign, Package, ShoppingBag, Users } from "lucide-react";
+import LowStockProducts from "./lowStockProducts";
+import OrderStatus from "./orderStatus";
+import RecentOrders from "./recentOrders";
+import StatCard from "./statCard";
+export type OrderWithUser = Prisma.OrderGetPayload<{
+  include: {
+    user: true;
+  };
+}>;
+
 export default async function AdminDashboardView() {
-  const [products, orders, users] = await Promise.all([
-      prisma.product.count({where:{ isActive: true } }),
+  const [TotalProducts, TotalOrders, TotalUsers, TotalRevenue] =
+    await Promise.all([
+      prisma.product.count({ where: { isActive: true } }),
       prisma.order.count(),
       prisma.user.count(),
+      prisma.order.aggregate({
+        where: {
+          status: "DELIVERED",
+        },
+        _sum: {
+          totalPrice: true,
+        },
+      }),
     ]);
+  const stats = [
+    {
+      title: "Total Products",
+      value: TotalProducts,
+      icon: Package,
+    },
+    {
+      title: "Total Orders",
+      value: TotalOrders,
+      icon: ShoppingBag,
+    },
+    {
+      title: "Total Users",
+      value: TotalUsers,
+      icon: Users,
+    },
+    {
+      title: "Total Revenue",
+      value: `$${TotalRevenue._sum.totalPrice?.toFixed(2)}`,
+      icon: DollarSign,
+    },
+  ];
+  
+  const recentOrders = await prisma.order.findMany({
+    take: 5,
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      user: true,
+    },
+  });
+  const statusCounts = await prisma.order.groupBy({
+    by: ["status"],
+    _count: true,
+  });
+
   return (
-    <section>
-      <div className="flex items-start flex-col gap-1">
-        <h5 className="text-3xl font-semibold">Welcome back, Admin</h5>
-        <p>Here&rsquo;s what&rsquo;s happening with your store today.</p>
+    <div className="p-6 max-w-6xl w-full mx-auto space-y-6">
+      <div>
+        <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-fg-muted mt-0.5">
+          Overview of your store performance.
+        </p>
       </div>
-      <div className="grid grid-cols-12 gap-2  mt-10">
-        <div className="h-50 w-full max-w-96 bg-card p-6 hover:shadow-sm border transition-all duration-300  hover:-translate-y-1  lg:col-span-3 md:col-span-4 col-span-12 flex flex-col justify-between  gap-4 font-semibold text-2xl  rounded-2xl">
-          <div className="flex items-start justify-between w-full">
-            <div className="bg-muted  border rounded-md p-2 flex items-center justify-center">
-              <Box />
-            </div>
-            <Badge className="bg-green-100 border border-green-300 text-green-600">
-              <TrendingUp />
-              Live
-            </Badge>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground font-normal">
-              Total Products
-            </p>
-            <p className="text-4xl font-semibold ">{products}</p>
-          </div>
+      <section className="mt-2">
+        <div className="grid bg-card grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map((item) => (
+            <StatCard key={item.title} {...item} />
+          ))}
         </div>
-        <div className="h-50 w-full max-w-96 bg-card p-6 hover:shadow-sm border transition-all duration-300  hover:-translate-y-1  lg:col-span-3 md:col-span-4 col-span-12 flex flex-col justify-between  gap-4 font-semibold text-2xl  rounded-2xl">
-          <div className="flex items-start justify-between w-full">
-            <div className="bg-muted  border rounded-md p-2 flex items-center justify-center">
-              <ShoppingCart />
-            </div>
-            <Badge className="bg-green-100 border border-green-300 text-green-600">
-              <TrendingUp />
-              Live
-            </Badge>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground font-normal">
-              Total Orders
-            </p>
-            <p className="text-4xl font-semibold ">{orders}</p>
-          </div>
-        </div>
-        <div className="h-50 w-full max-w-96 bg-card p-6 hover:shadow-sm border transition-all duration-300  hover:-translate-y-1  lg:col-span-3 md:col-span-4 col-span-12 flex flex-col justify-between  gap-4 font-semibold text-2xl  rounded-2xl">
-          <div className="flex items-start justify-between w-full">
-            <div className="bg-muted  border rounded-md p-2 flex items-center justify-center">
-              <Users />
-            </div>
-            <Badge className="bg-green-100 border border-green-300 text-green-600">
-              <TrendingUp />
-              Live
-            </Badge>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground font-normal">
-              Total Users
-            </p>
-            <p className="text-4xl font-semibold ">{users}</p>
-          </div>
-        </div>
+      </section>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <RecentOrders orders={recentOrders} />
+
+        <OrderStatus orders={statusCounts} />
       </div>
-    </section>
+      <LowStockProducts />
+    </div>
   );
 }

@@ -1,63 +1,70 @@
-"use client";
+import { type Table } from "@tanstack/react-table";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "./pagination";
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
-type Props = {
-  page: number;
-  totalPages: number;
-  baseUrl: string;
-};
+import { Button } from "@/components/ui/button";
 
-export function DataTablePagination({ page, totalPages, baseUrl }: Props) {
+interface DataTablePaginationProps<TData> {
+  table: Table<TData>;
+}
+
+export function DataTablePagination<TData>({
+  table,
+}: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-end space-x-2 py-4 px-2">
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            {page > 1 ? (
-              <PaginationPrevious href={`${baseUrl}?page=${page - 1}`} />
-            ) : (
-              <PaginationPrevious
-                aria-disabled
-                className="pointer-events-none opacity-50"
-              />
-            )}
-          </PaginationItem>
-          {totalPages <= 1 ? (
-            <PaginationItem>
-              <PaginationLink isActive>1</PaginationLink>
-            </PaginationItem>
-          ) : (
-            Array.from({ length: totalPages }).map((_, index) => (
-              <PaginationItem key={index}>
-                <PaginationLink
-                  href={`${baseUrl}?page=${index + 1}`}
-                  isActive={page === index + 1}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))
-          )}
-
-          <PaginationItem>
-            {page < totalPages ? (
-              <PaginationNext href={`${baseUrl}?page=${page + 1}`} />
-            ) : (
-              <PaginationNext
-                aria-disabled
-                className="pointer-events-none opacity-50"
-              />
-            )}
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+    <div className="flex items-center justify-center p-2">
+      <div className="flex items-center space-x-6 lg:space-x-8">
+        <div className="flex w-25 items-center justify-center text-sm font-medium">
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="icon"
+            className="hidden size-8 lg:flex"
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <span className="sr-only">Go to first page</span>
+            <ChevronsLeft />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <span className="sr-only">Go to previous page</span>
+            <ChevronLeft />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <span className="sr-only">Go to next page</span>
+            <ChevronRight />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="hidden size-8 lg:flex"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+          >
+            <span className="sr-only">Go to last page</span>
+            <ChevronsRight />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

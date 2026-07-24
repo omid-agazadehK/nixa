@@ -75,7 +75,6 @@ export default function AccountForm({ user, setIsEdit }: Props) {
     reset();
     setIsEdit(false);
   };
-  console.log(data);
   return (
     <Card className="lg:col-span-9 md:col-span-8 col-span-12 bg-card rounded-xl shadow h-fit md:px-7.5 md:py-10 border-none ring-0   ">
       <CardHeader>

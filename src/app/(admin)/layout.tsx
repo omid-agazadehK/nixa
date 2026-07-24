@@ -15,31 +15,12 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { sidebarData } from "@/lib/constants";
 import { isActive } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
-const sidebarData = {
-  navMain: [
-    {
-      title: "Menu",
-      items: [
-        {
-          title: "Dashboard",
-          url: "/admin/dashboard",
-        },
-        {
-          title: "Products",
-          url: "/admin/products",
-        },
-        {
-          title: "Orders",
-          url: "/admin/orders",
-        },
-      ],
-    },
-  ],
-};
+import React, { createElement } from "react";
+
 export default function AdminLayout({
   children,
 }: {
@@ -59,14 +40,19 @@ export default function AdminLayout({
             <SidebarGroup key={item.title}>
               <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
               <SidebarGroupContent>
-                <SidebarMenu >
+                <SidebarMenu>
                   {item.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
+                        className="text-muted-foreground"
+                        size="lg"
                         asChild
                         isActive={isActive(pathname, item.url)}
                       >
-                        <Link href={item.url}>{item.title}</Link>
+                        <Link href={item.url}>
+                          {createElement(item.icon)}
+                          {item.title}
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -82,9 +68,8 @@ export default function AdminLayout({
         <div className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger />
         </div>
-        <div className="flex flex-1 min-w-0  flex-col gap-4 p-4 ">
-          {children}
-        </div>
+
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );

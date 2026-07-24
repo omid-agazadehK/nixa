@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function ProductCardSkeleton() {
   return (
     <>
-      {[...Array(4)].map((_, i) => (
+      {[...Array(6)].map((_, i) => (
         <Card
           key={i}
           className="w-full lg:col-span-2 sm:col-span-3  col-span-4  border border-border"

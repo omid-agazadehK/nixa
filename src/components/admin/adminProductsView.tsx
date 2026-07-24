@@ -1,40 +1,14 @@
 import { prisma } from "@/lib/prisma";
-import { productColumns } from "./productColumns";
 import { DataTable } from "../ui/data-table";
-import { unstable_cache } from "next/cache";
+import { productColumns } from "./productColumns";
 
-export default async function AdminProductsView({
-  pageParam,
-}: {
-  pageParam: string;
-}) {
-  const getProducts = unstable_cache(
-  async (page: number) => {
-    const limit = 10;
+export default async function AdminProductsView() {
+  const products = await prisma.product.findMany({
+    include: { category: true },
+  });
 
-    const total = await prisma.product.count();
-
-    const products = await prisma.product.findMany({
-      include: { category: true },
-      skip: (page - 1) * limit,
-      take: limit,
-    });
-
-    return {
-      products,
-      totalPages: Math.ceil(total / limit),
-    };
-  },
-  ["products"],
-  {
-    revalidate: 60,
-    tags: ["products"],
-  }
-);
-  const page = Math.max(1, Number(pageParam) || 1);
-const { products, totalPages } = await getProducts(Number(page));
   return (
-    <section>
+    <section className="p-6 max-w-6xl w-full mx-auto space-y-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold tracking-tight">Products</h2>
         <p className="text-sm text-muted-foreground">
@@ -50,9 +24,6 @@ const { products, totalPages } = await getProducts(Number(page));
           href: "/admin/products/new",
           label: "Create product",
         }}
-        baseUrl="/admin/products"
-        page={page}
-        totalPages={totalPages}
       />
     </section>
   );

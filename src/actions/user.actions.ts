@@ -2,8 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { UserAccountFormSchema } from "@/lib/schema";
-import { requireUserId } from "@/lib/utils";
+import { requireAdmin, requireUserId } from "@/lib/utils";
 import { UserFormValues } from "@/types";
+import { UserRole } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 export type StateAction = {
   status: boolean;
@@ -40,6 +41,35 @@ export async function updateUserAccountInfo(data: UserFormValues) {
     return {
       success: false,
       message: "Something went wrong. Please try again later.",
+    };
+  }
+}
+export async function updateRole(userId: string, role: UserRole) {
+  try {
+    await requireAdmin();
+
+    const res = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role,
+      },
+    });
+
+    revalidatePath("/admin/users");
+
+    return {
+      success: true,
+      message: "User role updated successfully.",
+      role: res.role,
+    };
+  } catch (error) {
+    console.error("UPDATE_ROLE_ERROR:", error);
+
+    return {
+      success: false,
+      message: "Failed to update user role.",
     };
   }
 }

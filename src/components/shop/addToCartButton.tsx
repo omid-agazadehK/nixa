@@ -26,7 +26,7 @@ export default function AddToCartButton({
   return (
     <Button
       onClick={addtoCarta}
-      disabled={isDisable}
+      disabled={isPending}
       size={"lg"}
       className=" max-w-lg w-full md:h-16 h-10  md:text-lg text-sm"
     >

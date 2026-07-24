@@ -17,12 +17,14 @@ export default async function EditProductPageView({
     notFound();
   }
   return (
-    <section className="flex items-center justify-center mt-10">
-      <AdminProductForm
-        categories={categories}
-        product={product}
-        onSubmit={updateProduct.bind(null, id)}
-      />
-    </section>
+    <div className="p-6 max-w-6xl w-full mx-auto space-y-6">
+      <section className="flex items-center justify-center mt-10">
+        <AdminProductForm
+          categories={categories}
+          product={product}
+          onSubmit={updateProduct.bind(null, id)}
+        />
+      </section>
+    </div>
   );
 }

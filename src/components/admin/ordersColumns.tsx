@@ -25,7 +25,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
     accessorKey: "id",
     header: "Order id",
     cell: ({ row }) => {
-      return <span>#{row.original.id.slice(0, 8)}</span>;
+      return <span>ORD-{row.original.orderNumber}</span>;
     },
   },
   {
@@ -96,8 +96,8 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
   },
 
   {
-    id: "actions",
-    header: "Actions",
+    id: "action",
+    header: "Action",
     cell: ({ row }) => {
       const order = row.original;
       const user = row.original.user;
@@ -130,7 +130,7 @@ export const ordersColumns: ColumnDef<OrderWithRelations>[] = [
             <Separator />
             <div className="grid flex-1 auto-rows-min gap-6 px-4 ">
               <div className="flex items-center justify-between">
-                <span className="font-medium">#{order.id.slice(0, 8)}</span>
+                <span className="font-medium"> ORD-{order.orderNumber}</span>
                 <Badge
                   variant={"outline"}
                   className={` text-xs ${ORDER_STATUS[order.status].style}`}

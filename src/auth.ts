@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (trigger === "update") {
         if (session.fullName) token.fullName = session.fullName;
         if (session.email) token.email = session.email;
+        if (session.role) token.role = session.role;
       }
 
       return token;

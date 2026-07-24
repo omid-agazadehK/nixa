@@ -6,8 +6,10 @@ export default async function NewView() {
   const categories = await prisma.category.findMany();
 
   return (
-    <section className="mt-10 flex items-center justify-center ">
-      <AdminProductForm categories={categories} onSubmit={createProduct} />
-    </section>
+    <div className="p-6 max-w-6xl w-full mx-auto space-y-6">
+      <section className="mt-10 flex items-center justify-center ">
+        <AdminProductForm categories={categories} onSubmit={createProduct} />
+      </section>
+    </div>
   );
 }

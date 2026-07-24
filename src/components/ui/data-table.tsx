@@ -9,6 +9,7 @@ import {
   VisibilityState,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -22,19 +23,13 @@ interface DataTableProps<TData, TValue> {
     href: string;
     label: string;
   };
-  page: number;
-  totalPages: number;
-  baseUrl: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  page,
-  totalPages,
   filterColumn,
   createButton,
-  baseUrl,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -44,6 +39,7 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -53,12 +49,7 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
       columnVisibility,
-      pagination: {
-        pageIndex: page - 1,
-        pageSize: 10,
-      },
     },
-    manualPagination: true,
   });
 
   return (
@@ -69,11 +60,7 @@ export function DataTable<TData, TValue>({
         table={table}
       />
       <TableContent table={table} columns={columns} />
-      <DataTablePagination
-        page={page}
-        totalPages={totalPages}
-        baseUrl={baseUrl}
-      />
+      <DataTablePagination table={table} />
     </div>
   );
 }

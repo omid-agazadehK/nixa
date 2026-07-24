@@ -22,7 +22,6 @@ export default async function AccountOrders() {
     include: { items: { include: { product: true } } },
     orderBy: { createdAt: "desc" },
   });
-  console.log(userOrders);
   return (
     <div className="lg:col-span-9 md:col-span-8 col-span-12 bg-card rounded-xl border shadow h-fit md:p-8 p-2 ">
       <Table className="border">
@@ -41,7 +40,7 @@ export default async function AccountOrders() {
           {userOrders.map((order) => (
             <TableRow key={order.id}>
               <TableCell className="font-medium">
-                {order.id.slice(0, 8)}
+                ORD-{order.orderNumber}
               </TableCell>
               <TableCell>
                 <Badge

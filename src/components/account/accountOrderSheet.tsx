@@ -45,7 +45,7 @@ export default function AccountOrderSheet({
         <Separator />
         <div className="grid flex-1 auto-rows-min gap-6 px-4 ">
           <div className="flex items-center justify-between">
-            <span className="font-medium">#{order.id.slice(0, 8)}</span>
+            <span className="font-medium"> ORD-{order.orderNumber}</span>
             <Badge
               variant={"outline"}
               className={` text-xs ${ORDER_STATUS[order.status].style}`}
