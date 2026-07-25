@@ -102,8 +102,8 @@ You can access the live site here: [https://torino-app-two.vercel.app/](https://
 
 You can use the following credentials to explore the admin dashboard:
 
-**Email:** `demo@example.com`  
-**Password:** `your-demo-password`
+**Email:** `admin@test.com`  
+**Password:** `12345678`
 
 ## 🏁 Getting Started
 
