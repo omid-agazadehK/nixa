@@ -80,14 +80,30 @@ It also includes an admin dashboard for managing products, users, and orders.
 ### Utilities
 
 - [Sonner](https://sonner.emilkowal.ski/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
 
 ---
+
+## 🏗️ Architecture Decisions
+
+- **Server Components for data fetching** — Fetch data directly from the database using Prisma without an unnecessary API layer.
+
+- **URL-based state for product browsing** — Store product filters, search queries, sorting, and pagination in URL search parameters to keep the state shareable and persistent across navigation.
+
+- **Server Actions for mutations** — Handle data mutations on the server with server-side validation and authorization.
+
+- **Atomic checkout** — Use Prisma transactions to ensure that order creation, cart cleanup, and stock updates succeed or fail together.
 
 ## 🚀 Deployment
 
 This project is deployed on Vercel. [Vercel](https://vercel.com/).  
 You can access the live site here: [https://torino-app-two.vercel.app/](https://torino-app-two.vercel.app/)
+
+## 🔑 Demo Account
+
+You can use the following credentials to explore the admin dashboard:
+
+**Email:** `demo@example.com`  
+**Password:** `your-demo-password`
 
 ## 🏁 Getting Started
 
@@ -96,7 +112,7 @@ You can access the live site here: [https://torino-app-two.vercel.app/](https://
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/nixa.git
+git clone https://github.com/omid-agazadehK/nixa.git
 cd nixa
 ```
 

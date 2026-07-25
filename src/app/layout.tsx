@@ -11,6 +11,7 @@ export const fraunces = Fraunces({
   variable: "--font-fraunces",
 });
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nixa-one.vercel.app"),
   title: {
     default: "Nixa | Modern Furniture Store",
     template: "%s | Nixa",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nixa | Modern Furniture Store",
     description: "A modern furniture e-commerce platform built with Next.js.",
-    url: "https://your-domain.com",
+    url: "https://nixa-one.vercel.app",
     siteName: "Nixa",
     images: [
       {
