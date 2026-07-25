@@ -1,9 +1,15 @@
 import Logo from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-
+export const metadata: Metadata = {
+  title: {
+    default: "Authentication",
+    template: "%s | Nixa",
+  },
+};
 export default function AuthLayout({
   children,
 }: {

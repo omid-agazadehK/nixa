@@ -42,7 +42,7 @@ export const signUp = async (formData: SignUpFormData) => {
         email: newUser.email,
       },
     };
-  } catch (error) {
+  } catch {
     return {
       status: "error",
       message: "Something went wrong. Please try again.",

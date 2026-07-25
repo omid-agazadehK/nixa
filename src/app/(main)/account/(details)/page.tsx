@@ -1,8 +1,11 @@
 import { auth } from "@/auth";
 import AccountView from "@/components/account/accountView";
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
-
+export const metadata: Metadata = {
+  title: "َAccount",
+};
 export default async function AccountPage() {
   const session = await auth();
   const user = await prisma.user.findUnique({

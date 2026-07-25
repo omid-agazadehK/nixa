@@ -10,6 +10,7 @@ export async function addToCart(productId: string) {
 
     const product = await prisma.product.findFirst({
       where: { id: productId, isActive: true },
+      orderBy: { createdAt: "desc" },
     });
     if (!product) {
       return { success: false, message: "Product not found." };

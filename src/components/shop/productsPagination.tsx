@@ -15,7 +15,7 @@ export default function ProductsPagination({
   totalPages: number;
 }) {
   return (
-    <Pagination className="py-2 w-fit shadow col-span-6 mx-auto bg-card rounded-lg">
+    <Pagination className="py-2 w-fit shadow px-3 col-span-6 mx-auto bg-card rounded-lg">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious

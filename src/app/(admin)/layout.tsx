@@ -1,32 +1,30 @@
-"use client";
+import AdminSidebarContent from "@/components/layout/admin/adminSidebarContent";
 import Logo from "@/components/shared/logo";
 import {
   Sidebar,
-  SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { sidebarData } from "@/lib/constants";
-import { isActive } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { createElement } from "react";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: {
+    default: "Admin Dashboard",
+    template: "%s | Nixa Admin",
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   return (
     <SidebarProvider>
       <Sidebar variant="inset">
@@ -35,32 +33,7 @@ export default function AdminLayout({
             <Logo />
           </div>
         </SidebarHeader>
-        <SidebarContent>
-          {sidebarData.navMain.map((item) => (
-            <SidebarGroup key={item.title}>
-              <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {item.items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        className="text-muted-foreground"
-                        size="lg"
-                        asChild
-                        isActive={isActive(pathname, item.url)}
-                      >
-                        <Link href={item.url}>
-                          {createElement(item.icon)}
-                          {item.title}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          ))}
-        </SidebarContent>
+        <AdminSidebarContent />
         <SidebarFooter />
       </Sidebar>
 

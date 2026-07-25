@@ -5,24 +5,8 @@ import {
   signUpSchema,
   UserAccountFormSchema,
 } from "@/lib/schema";
-import { Category, OrderStatus, Prisma } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
 import z from "zod";
-
-
-
-export type Product = {
-  category: Category;
-  categoryId: string;
-  createdAt: Date;
-  description: string;
-  id: string;
-  images: string[];
-  name: string;
-  price: number;
-  slug: string;
-  stock: number;
-};
-//
 
 //
 export type SortOption = {
@@ -73,7 +57,9 @@ export type CartControlItem = Prisma.CartItemGetPayload<{
 }>;
 export type CheckOutForm = z.infer<typeof checkoutSchema>;
 export type SuccessSearchParams = {
-  searchParams: { orderId: string };
+  searchParams: Promise<{
+    orderId: string;
+  }>;
 };
 export type AdminProductFormType = z.infer<typeof adminProductSchema>;
 export type UserFormValues = z.infer<typeof UserAccountFormSchema>;

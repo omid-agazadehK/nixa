@@ -8,7 +8,7 @@ type Props = {
   searchParams: ShopSearchParams;
 };
 
-const LIMIT = 10;
+const LIMIT = 6;
 export default async function Products({ searchParams }: Props) {
   const where = {
     isActive: true,
@@ -20,7 +20,7 @@ export default async function Products({ searchParams }: Props) {
     }),
   };
 
-  const page = Math.max(1, parseInt(searchParams.page ?? "1", 10) || 1);
+  const page = Math.max(1, parseInt(searchParams.page ?? "1", LIMIT) || 1);
   const totalProducts = await prisma.product.count({ where });
   const totalPages = Math.max(1, Math.ceil(totalProducts / LIMIT));
 
@@ -38,7 +38,12 @@ export default async function Products({ searchParams }: Props) {
   return (
     <>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <div
+          key={product.id}
+          className="lg:col-span-2 sm:col-span-3 col-span-6"
+        >
+          <ProductCard product={product} />
+        </div>
       ))}
       <ProductsPagination currentPage={page} totalPages={totalPages} />
     </>

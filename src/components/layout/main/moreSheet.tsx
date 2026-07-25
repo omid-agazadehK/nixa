@@ -9,20 +9,25 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Ellipsis, Info, Phone } from "lucide-react";
+import { Ellipsis, Info, Phone, UserCog } from "lucide-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 
 const moreMenuItems = [
   {
-    label: "About us",
+    label: "About",
     href: "/about",
     icon: Info,
   },
   {
-    label: "Contact us",
+    label: "Contact",
     href: "/contact",
     icon: Phone,
+  },
+  {
+    label: "Admin Panel",
+    href: "/admin",
+    icon: UserCog,
   },
 ];
 
@@ -46,7 +51,7 @@ export default function MoreSheet() {
               const Icon = item.icon;
 
               return (
-                <Fragment key={item.href} >
+                <Fragment key={item.href}>
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}

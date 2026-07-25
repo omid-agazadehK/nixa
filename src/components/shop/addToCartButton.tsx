@@ -14,6 +14,7 @@ export default function AddToCartButton({
 }) {
   const [isPending, startTransition] = useTransition();
   const addtoCarta = () => {
+    if (isPending || isDisable) return;
     startTransition(async () => {
       const res = await addToCart(id);
       if (res.success) {
@@ -26,7 +27,7 @@ export default function AddToCartButton({
   return (
     <Button
       onClick={addtoCarta}
-      disabled={isPending}
+      disabled={isPending || isDisable}
       size={"lg"}
       className=" max-w-lg w-full md:h-16 h-10  md:text-lg text-sm"
     >

@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { getProductBySlug } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -7,17 +8,10 @@ import CartControls from "../shared/cartControls";
 import { Badge } from "../ui/badge";
 import AddToCartButton from "./addToCartButton";
 
-export default async function ProductDetailsView({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function ProductDetailsView({ slug }: { slug: string }) {
   const Session = await auth();
   const userId = Session?.user?.id;
-  const product = await prisma.product.findFirst({
-    where: { slug: params.slug, isActive: true },
-    include: { category: true },
-  });
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
   let cartItem = null;
 

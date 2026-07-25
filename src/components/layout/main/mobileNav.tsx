@@ -13,7 +13,7 @@ export default function MobileNav() {
 
   return (
     <div className="bg-background border-border fixed bottom-0 z-50 w-full border-t sm:hidden">
-      <div className="grid w-full grid-cols-5 place-items-center p-0.5 gap-x-1 text-xs font-light">
+      <nav className="grid w-full grid-cols-5 place-items-center p-0.5 gap-x-1 text-xs font-light">
         {mobileNavRoutes.map((item) => (
           <MobileNavLink key={item.href} item={item} />
         ))}
@@ -29,7 +29,7 @@ export default function MobileNav() {
             login
           </Link>
         )}
-      </div>
+      </nav>
     </div>
   );
 }

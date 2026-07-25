@@ -37,7 +37,7 @@ export async function updateUserAccountInfo(data: UserFormValues) {
       success: true,
       message: "Account info updated successfully.",
     };
-  } catch (error) {
+  } catch  {
     return {
       success: false,
       message: "Something went wrong. Please try again later.",
@@ -64,8 +64,7 @@ export async function updateRole(userId: string, role: UserRole) {
       message: "User role updated successfully.",
       role: res.role,
     };
-  } catch (error) {
-    console.error("UPDATE_ROLE_ERROR:", error);
+  } catch  {
 
     return {
       success: false,

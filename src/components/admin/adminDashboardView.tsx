@@ -44,11 +44,11 @@ export default async function AdminDashboardView() {
     },
     {
       title: "Total Revenue",
-      value: `$${TotalRevenue._sum.totalPrice?.toFixed(2)}`,
+      value: `$${TotalRevenue._sum.totalPrice?.toFixed(2) ?? 0}`,
       icon: DollarSign,
     },
   ];
-  
+
   const recentOrders = await prisma.order.findMany({
     take: 5,
     orderBy: {

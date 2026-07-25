@@ -88,7 +88,7 @@ export async function order(formData: CheckOutForm) {
       orderId = order.id;
       return order;
     });
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Something went wrong. Please try again.",
@@ -117,7 +117,7 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
       success: true,
       message: `#${result.id.slice(0, 8)} updated to ${result.status.toLowerCase()}`,
     };
-  } catch (error) {
+  } catch  {
     return {
       success: false,
       message: "Something went wrong. Please try again.",

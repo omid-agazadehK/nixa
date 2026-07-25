@@ -53,7 +53,7 @@ export default function SignUpView() {
         return;
       }
       toast.error(res.message);
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong!");
     }
   };

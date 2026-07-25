@@ -65,7 +65,7 @@
   --popover-foreground: oklch(0.2 0.02 250);
 
   /* رنگ اصلی: سبز تیل (تیره و شیک) */
-  --primary: oklch(0.42 0.08 180);
+  --primary: #005b4f;
   --primary-foreground: oklch(0.98 0.005 200);
 
   /* رنگ ثانویه: خاکستری بسیار ملایم */

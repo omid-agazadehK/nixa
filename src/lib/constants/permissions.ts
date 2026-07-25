@@ -1,10 +1,3 @@
-export const protectedRoutes = [
-  "/cart",
-  "/checkout",
-  "/account",
-  "/orders",
-];
+export const protectedRoutes = ["/cart", "/checkout", "/account", "/orders"];
 
-export const adminRoutes = [
-  "/admin",
-];
+export const adminRoutes = ["/admin"];

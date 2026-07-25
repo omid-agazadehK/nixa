@@ -34,9 +34,7 @@ export default async function AccountOrders() {
             <TableHead className="text-right">action</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody
-          className="md:h-100 md:min-h-100 h-70 min-h-70 "
-        >
+        <TableBody className="">
           {userOrders.map((order) => (
             <TableRow key={order.id}>
               <TableCell className="font-medium">

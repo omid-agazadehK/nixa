@@ -23,8 +23,8 @@ const formOptions: UseFormProps<LoginForm> = {
   resolver: zodResolver(loginSchema),
   mode: "onBlur",
   defaultValues: {
-    email: "",
-    password: "",
+    email: "admin@test.com",
+    password: "12345678",
   },
 };
 export default function LoginView() {
@@ -36,10 +36,7 @@ export default function LoginView() {
 
   const onSubmit = async (formData: LoginForm) => {
     try {
-      
-    } catch (error) {
-      
-    }
+    } catch {}
     const res = await logIn(formData);
     if (!res.success) {
       toast.error(res.message);
@@ -84,7 +81,7 @@ export default function LoginView() {
       </CardContent>
       <CardFooter>
         <span>
-          New to Nixa sho?{" "}
+          New to Nixa?{" "}
           <Link href="/signup" className="underline text-primary/80">
             Create an account{" "}
           </Link>

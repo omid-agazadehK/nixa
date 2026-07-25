@@ -3,7 +3,7 @@ import CheckoutForm from "./checkoutForm";
 import OrderSummary from "./orderSummary";
 import OrderSummarySkeleton from "./orderSummarySkeleton";
 
-export default function CheckoutpView() {
+export default function CheckoutView() {
   return (
     <section className="grid grid-cols-12 gap-5 mt-10">
       <CheckoutForm />

@@ -3,8 +3,14 @@ import LogOutButton from "@/components/account/logOutButton";
 import AccountNavItem from "@/components/layout/main/accountNavItem";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
 import { ReactNode } from "react";
-
+export const metadata: Metadata = {
+  title: {
+    default: "Account",
+    template: "%s | Nixa",
+  },
+};
 export default async function AccountLayout({
   children,
 }: {

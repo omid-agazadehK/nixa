@@ -5,6 +5,7 @@ import { productColumns } from "./productColumns";
 export default async function AdminProductsView() {
   const products = await prisma.product.findMany({
     include: { category: true },
+    orderBy: { createdAt: "desc" }
   });
 
   return (

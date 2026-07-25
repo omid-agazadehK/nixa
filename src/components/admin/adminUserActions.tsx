@@ -34,7 +34,6 @@ export default function AdminUserActions({ userId }: { userId: string }) {
   const updateRoleHanler = async () => {
     if (!selectedRole) return;
     const result = await updateRole(userId, selectedRole);
-    console.log(result);
     if (!result.success) {
       toast.error(result.message);
       return;
