@@ -15,10 +15,7 @@ export async function updateUserAccountInfo(data: UserFormValues) {
   const validatedFields = UserAccountFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return {
-      success: false,
-      message: "Validation failed. Please check the fields.",
-    };
+    throw new Error("Validation failed. Please check the fields.");
   }
   const { firstName, lastName, email, address, phone } = validatedFields.data;
   const fullName = `${firstName} ${lastName}`;
@@ -37,10 +34,13 @@ export async function updateUserAccountInfo(data: UserFormValues) {
       success: true,
       message: "Account info updated successfully.",
     };
-  } catch  {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again later.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again later.",
     };
   }
 }
@@ -64,11 +64,11 @@ export async function updateRole(userId: string, role: UserRole) {
       message: "User role updated successfully.",
       role: res.role,
     };
-  } catch  {
-
+  } catch (error) {
     return {
       success: false,
-      message: "Failed to update user role.",
+      message:
+        error instanceof Error ? error.message : "Failed to update user role.",
     };
   }
 }

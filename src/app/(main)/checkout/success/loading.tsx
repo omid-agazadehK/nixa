@@ -8,8 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (
-    <div className="flex flex-1 items-center justify-center h-full">
-      <Card className=" min-w-lg ">
+    <div className="flex-1 h-full flex items-center justify-center">
+      <Card className="md:min-w-lg max-md:w-full">
         <CardHeader className="flex items-center flex-col gap-3">
           <Skeleton className="w-31.25 h-31.25 rounded-full" />
 

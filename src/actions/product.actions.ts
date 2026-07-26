@@ -12,15 +12,12 @@ export async function createProduct(data: AdminProductFormType) {
     const result = adminProductSchema.safeParse(data);
 
     if (!result.success) {
-      return { success: false, message: "Invalid form data." };
+      throw new Error("Invalid form data.");
     }
     const { name, price, stock, description, image, categoryId } = result.data;
     const slug = slugify(name);
 
-    const validationError = await validateProductConstraints(slug, categoryId);
-    if (validationError) {
-      return validationError;
-    }
+    await validateProductConstraints(slug, categoryId);
 
     const product = await prisma.product.create({
       data: {
@@ -36,10 +33,13 @@ export async function createProduct(data: AdminProductFormType) {
     revalidatePath("/admin/products");
     revalidatePath("/shop");
     return { success: true, message: "Product created successfully.", product };
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Failed to create the product.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Failed to create the product.",
     };
   }
 }
@@ -50,19 +50,12 @@ export async function updateProduct(id: string, data: AdminProductFormType) {
     const result = adminProductSchema.safeParse(data);
 
     if (!result.success) {
-      return { success: false, message: "input incorrect" };
+      throw new Error("input incorrect.");
     }
     const { name, price, stock, description, image, categoryId } = result.data;
     const slug = slugify(name);
 
-    const validationError = await validateProductConstraints(
-      slug,
-      categoryId,
-      id,
-    );
-    if (validationError) {
-      return validationError;
-    }
+    await validateProductConstraints(slug, categoryId, id);
 
     const res = await prisma.product.update({
       where: { id },
@@ -84,8 +77,12 @@ export async function updateProduct(id: string, data: AdminProductFormType) {
       message: "Product updated successfully.",
       product: res,
     };
-  } catch {
-    return { success: false, message: "Failed to update product." };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Failed to update product.",
+    };
   }
 }
 export async function deleteProduct(id: string) {
@@ -100,7 +97,11 @@ export async function deleteProduct(id: string) {
     revalidatePath("/shop");
 
     return { success: true, message: "Product deleted successfully.", res };
-  } catch {
-    return { success: false, message: "Failed to delete product." };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Failed to delete product.",
+    };
   }
 }

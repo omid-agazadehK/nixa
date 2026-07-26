@@ -12,18 +12,16 @@ export const signUp = async (formData: SignUpFormData) => {
   try {
     const parsed = signUpSchema.safeParse(formData);
     if (!parsed.success) {
-      return {
-        success: false,
-        message: "Invalid form data. Please refresh and try again.",
-      };
+      throw new Error("Invalid form data. Please refresh and try again.");
     }
     const { email, password, name, lastName } = parsed.data;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
-    if (existingUser)
-      return { success: false, message: "This email is already in use" };
+    if (existingUser) {
+      throw new Error("This email is already in use");
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -42,10 +40,13 @@ export const signUp = async (formData: SignUpFormData) => {
         email: newUser.email,
       },
     };
-  } catch {
+  } catch (error) {
     return {
-      status: "error",
-      message: "Something went wrong. Please try again.",
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 };
@@ -54,10 +55,7 @@ export const logIn = async (formData: LoginForm) => {
   try {
     const parsed = loginSchema.safeParse(formData);
     if (!parsed.success) {
-      return {
-        success: false,
-        message: "Invalid form data. Please refresh and try again.",
-      };
+      throw new Error("Invalid form data. Please refresh and try again.");
     }
     const { email, password } = parsed.data;
 
@@ -75,7 +73,7 @@ export const logIn = async (formData: LoginForm) => {
         default:
           return {
             success: false,
-            message: "Something went wrong. Please try again.",
+            message: error.message || "Something went wrong. Please try again.",
           };
       }
     }
@@ -83,14 +81,18 @@ export const logIn = async (formData: LoginForm) => {
     throw error;
   }
 };
+
 export const logout = async () => {
   try {
     await signOut({ redirectTo: "/login" });
-  } catch (err) {
-    if (isRedirectError(err)) throw err;
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 };

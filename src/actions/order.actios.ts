@@ -6,6 +6,7 @@ import { requireAdmin, requireUserId } from "@/lib/utils";
 import { CheckOutForm } from "@/types";
 import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 
 export async function order(formData: CheckOutForm) {
@@ -15,11 +16,9 @@ export async function order(formData: CheckOutForm) {
     const validatedData = checkoutSchema.safeParse(formData);
     const { success, data } = validatedData;
     if (!success) {
-      return {
-        success: false,
-        message: "Invalid form data. Please refresh and try again.",
-      };
+      throw new Error("Invalid form data. Please refresh and try again.");
     }
+
     const cartItems = await prisma.cartItem.findMany({
       where: { userId },
       include: { product: true },
@@ -29,16 +28,10 @@ export async function order(formData: CheckOutForm) {
     );
 
     if (outOfStockItem) {
-      return {
-        success: false,
-        message: `${outOfStockItem.product.name} is out of stock.`,
-      };
+      throw new Error(`${outOfStockItem.product.name} is out of stock.`);
     }
-    if (cartItems.length === 0) {
-      return {
-        success: false,
-        message: "Your cart is empty.",
-      };
+    if (cartItems.length <= 0) {
+      throw new Error("Your cart is empty.");
     }
     const totalPrice = cartItems.reduce(
       (sum, item) => sum + item.quantity * item.product.price,
@@ -88,20 +81,21 @@ export async function order(formData: CheckOutForm) {
       orderId = order.id;
       return order;
     });
-  } catch {
+    revalidatePath("/");
+
+    redirect(`/checkout/success?orderId=${orderId}`);
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
-  if (!orderId) {
-    return {
-      success: false,
-      message: "Something went wrong. Please try again.",
-    };
-  }
-  revalidatePath("/");
-  redirect(`/checkout/success?orderId=${orderId}`);
 }
 
 export async function updateOrderStatus(id: string, status: OrderStatus) {
@@ -117,10 +111,13 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
       success: true,
       message: `#${result.id.slice(0, 8)} updated to ${result.status.toLowerCase()}`,
     };
-  } catch  {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 }

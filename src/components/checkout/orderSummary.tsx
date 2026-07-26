@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { Separator } from "../ui/separator";
 
 export default async function OrderSummary() {
@@ -15,6 +16,9 @@ export default async function OrderSummary() {
     },
     orderBy: { createdAt: "desc" },
   });
+  if (cartItem.length <= 0) {
+    notFound();
+  }
   return (
     <div className="bg-card border col-span-12 rounded-2xl order-1 md:order-2 w-full md:col-span-6 py-4 h-fit px-6">
       <h3 className="text-2xl  font-fraunces">Order Summary</h3>

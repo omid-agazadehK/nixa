@@ -64,7 +64,7 @@ export default function DataTableToolbar<TData>({
           onChange={(event) =>
             table.getColumn(filterColumn)?.setFilterValue(event.target.value)
           }
-          className="md:max-w-sm text-sm w-full sm:w-auto bg-card"
+          className="md:max-w-sm  w-full sm:w-auto bg-background"
         />
       )}
     </div>

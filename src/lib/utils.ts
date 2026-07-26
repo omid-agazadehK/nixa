@@ -12,7 +12,6 @@ export async function requireUserId() {
   const session = await auth();
 
   const userId = session?.user?.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
@@ -77,11 +76,11 @@ export async function validateProductConstraints(
   ]);
 
   if (existingProduct) {
-    return { success: false, message: "Product with this name already exists" };
+    throw new Error("Product with this name already exists.");
   }
 
   if (!category) {
-    return { success: false, message: "Category not found" };
+    throw new Error("Category not found.");
   }
 
   return null;

@@ -23,8 +23,8 @@ export default async function SuccessView({ orderId }: { orderId: string }) {
     notFound();
   }
   return (
-    <section className="flex-1 h-full flex items-center justify-center">
-      <Card className="min-w-lg">
+    <section className="flex-1 h-full flex items-center justify-center text-center">
+      <Card className="md:min-w-lg max-md:w-full  ">
         <CardHeader className="flex items-center flex-col gap-3">
           <CircleCheck className="text-green-500" size={125} />
           <CardTitle className="text-2xl">Order Confirmed! 🎉</CardTitle>

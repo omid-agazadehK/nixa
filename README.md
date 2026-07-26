@@ -96,7 +96,7 @@ It also includes an admin dashboard for managing products, users, and orders.
 ## 🚀 Deployment
 
 This project is deployed on Vercel. [Vercel](https://vercel.com/).  
-You can access the live site here: [https://torino-app-two.vercel.app/](https://torino-app-two.vercel.app/)
+You can access the live site here: [https://nixa-one.vercel.app/](https://nixa-one.vercel.app/)
 
 ## 🔑 Demo Account
 

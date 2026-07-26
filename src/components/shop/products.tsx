@@ -36,6 +36,8 @@ export default async function Products({ searchParams }: Props) {
   if (products.length === 0) return <EmptyProductState />;
 
   return (
+
+    
     <>
       {products.map((product) => (
         <div

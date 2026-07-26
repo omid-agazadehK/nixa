@@ -32,7 +32,7 @@ export default function TableConten<TData, TValue>({
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead  className="truncate max-w-20" key={header.id}>
+              <TableHead  className="truncate md:max-w-20" key={header.id}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
@@ -55,7 +55,7 @@ export default function TableConten<TData, TValue>({
                 <TableCell
                   key={cell.id}
                   title={getCellValueForTooltip(cell.getValue())}
-                  className="truncate max-w-20"
+                  className="truncate md:max-w-20"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>

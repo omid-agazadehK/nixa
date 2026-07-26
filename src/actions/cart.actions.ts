@@ -7,29 +7,22 @@ import { revalidatePath } from "next/cache";
 export async function addToCart(productId: string) {
   try {
     const userId = await requireUserId();
-
     const product = await prisma.product.findFirst({
       where: { id: productId, isActive: true },
       orderBy: { createdAt: "desc" },
     });
     if (!product) {
-      return { success: false, message: "Product not found." };
+      throw new Error("Product not found.");
     }
 
     const cartItem = await prisma.cartItem.findUnique({
       where: { userId_productId: { userId, productId } },
     });
     if (product.stock <= 0) {
-      return {
-        success: false,
-        message: "Out of stock.",
-      };
+      throw new Error("Out of stock.");
     }
     if (cartItem && cartItem.quantity >= product.stock) {
-      return {
-        success: false,
-        message: "You've reached the maximum available quantity.",
-      };
+      throw new Error("You've reached the maximum available quantity.");
     }
     const result = await prisma.cartItem.upsert({
       where: { userId_productId: { userId, productId } },
@@ -44,10 +37,13 @@ export async function addToCart(productId: string) {
       message: "Item added to cart successfully.",
       cartItem: result,
     };
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 }
@@ -69,10 +65,13 @@ export async function removeFromCart(cartItemId: string) {
       success: true,
       message: "Item removed from cart successfully.",
     };
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 }
@@ -85,16 +84,10 @@ export async function incrementFromCart(cartItemId: string) {
       include: { product: true },
     });
     if (!cartItem || cartItem.userId !== userId) {
-      return {
-        success: false,
-        message: "Cart item not found.",
-      };
+      throw new Error("Cart item not found.");
     }
     if (cartItem.quantity >= cartItem.product.stock) {
-      return {
-        success: false,
-        message: "You've reached the maximum available quantity.",
-      };
+      throw new Error("You've reached the maximum available quantity.");
     }
 
     const result = await prisma.cartItem.update({
@@ -108,10 +101,13 @@ export async function incrementFromCart(cartItemId: string) {
       message: "Item quantity updated successfully.",
       cartItem: result,
     };
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 }
@@ -123,16 +119,10 @@ export async function decrementFromCart(cartItemId: string) {
       where: { id: cartItemId },
     });
     if (!cartItem || cartItem.userId !== userId) {
-      return {
-        success: false,
-        message: "Cart item not found.",
-      };
+      throw new Error("Cart item not found.");
     }
     if (cartItem.quantity <= 1) {
-      return {
-        success: false,
-        message: "Minimum quantity reached. Remove the item instead.",
-      };
+      throw new Error("Minimum quantity reached. Remove the item instead.");
     }
     const result = await prisma.cartItem.update({
       where: { id: cartItemId },
@@ -144,10 +134,13 @@ export async function decrementFromCart(cartItemId: string) {
       message: "Item quantity updated successfully.",
       cartItem: result,
     };
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: "Something went wrong. Please try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
     };
   }
 }

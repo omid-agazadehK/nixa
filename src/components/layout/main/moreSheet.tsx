@@ -26,7 +26,7 @@ const moreMenuItems = [
   },
   {
     label: "Admin Panel",
-    href: "/admin",
+    href: "/admin/dashboard",
     icon: UserCog,
   },
 ];
