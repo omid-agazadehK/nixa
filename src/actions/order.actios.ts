@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { checkoutSchema } from "@/lib/schema";
-import { requireAdmin, requireUserId } from "@/lib/utils";
+import { requireAdmin, requireUser } from "@/lib/utils";
 import { CheckOutForm } from "@/types";
 import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 export async function order(formData: CheckOutForm) {
   let orderId: string | undefined;
   try {
-    const userId = await requireUserId();
+    const user = await requireUser();
     const validatedData = checkoutSchema.safeParse(formData);
     const { success, data } = validatedData;
     if (!success) {
@@ -20,7 +20,7 @@ export async function order(formData: CheckOutForm) {
     }
 
     const cartItems = await prisma.cartItem.findMany({
-      where: { userId },
+      where: { userId: user.id },
       include: { product: true },
     });
     const outOfStockItem = cartItems.find(
@@ -41,7 +41,7 @@ export async function order(formData: CheckOutForm) {
     await prisma.$transaction(async (tx) => {
       const order = await tx.order.create({
         data: {
-          userId,
+          userId: user.id,
           fullName: data.fullName,
           phone: data.phone,
           address: data.address,
@@ -75,7 +75,7 @@ export async function order(formData: CheckOutForm) {
 
       await tx.cartItem.deleteMany({
         where: {
-          userId,
+          userId: user.id,
         },
       });
       orderId = order.id;

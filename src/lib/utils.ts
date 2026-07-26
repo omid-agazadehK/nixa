@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function requireUserId() {
+export async function requireUser() {
   const session = await auth();
 
   const userId = session?.user?.id;
@@ -16,7 +16,7 @@ export async function requireUserId() {
     throw new Error("Unauthorized");
   }
 
-  return userId;
+  return session.user;
 }
 export async function requireAdmin() {
   const session = await auth();

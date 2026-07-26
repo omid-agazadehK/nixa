@@ -56,7 +56,6 @@ export default function AdminUserActions({ userId }: { userId: string }) {
             <MoreHorizontal />
           </Button>
         </DropdownMenuTrigger>
-
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Change Role</DropdownMenuLabel>
 

@@ -79,19 +79,17 @@ export default function AccountOrderSheet({
             {order.items?.map((item, index) => (
               <div
                 key={index}
-                className="bg-muted border rounded  flex items-center justify-between px-4 py-3 w-full"
+                className="bg-muted border rounded  flex items-center gap-1 p-3 w-full"
               >
-                <div className="flex items-center gap-2">
-                  <div className="bg-background rounded-lg text-muted-foreground p-2">
-                    <Package className="size-5" />
-                  </div>
-                  <span className="max-w-50 truncate text-xs">
-                    {item.product.name}
-                  </span>
+                <div className="bg-background rounded-lg text-muted-foreground p-2">
+                  <Package className="size-5" />
                 </div>
-                <div className="flex items-center gap-2 font-semibold text-xs">
-                  <span>${item.product.price.toFixed(2)}</span>
-                  <span>*{item.quantity}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs">{item.product.name}</span>
+                  <div className="flex items-center gap-2 font-semibold text-xs">
+                    <span>${item.product.price.toFixed(2)}</span>
+                    <span>*{item.quantity}</span>
+                  </div>
                 </div>
               </div>
             ))}

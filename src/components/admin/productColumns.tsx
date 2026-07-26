@@ -58,7 +58,15 @@ export const productColumns: ColumnDef<ProductWithCategory>[] = [
   },
   {
     accessorKey: "isActive",
-    header: "Status",
+    header: ({ column }) => {
+      return (
+        <DataTableColumnHeader
+          className="text-xs lg:text-sm"
+          column={column}
+          title="Status"
+        />
+      );
+    },
     cell: ({ row }) => (
       <Badge
         className="text-xs"

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { UserAccountFormSchema } from "@/lib/schema";
-import { requireAdmin, requireUserId } from "@/lib/utils";
+import { requireAdmin, requireUser } from "@/lib/utils";
 import { UserFormValues } from "@/types";
 import { UserRole } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -11,17 +11,25 @@ export type StateAction = {
   message?: string;
 };
 export async function updateUserAccountInfo(data: UserFormValues) {
-  const userId = await requireUserId();
-  const validatedFields = UserAccountFormSchema.safeParse(data);
-
-  if (!validatedFields.success) {
-    throw new Error("Validation failed. Please check the fields.");
-  }
-  const { firstName, lastName, email, address, phone } = validatedFields.data;
-  const fullName = `${firstName} ${lastName}`;
   try {
+    const user = await requireUser();
+    const validatedFields = UserAccountFormSchema.safeParse(data);
+
+    if (!validatedFields.success) {
+      throw new Error("Validation failed. Please check the fields.");
+    }
+
+    if (
+      user.email === "admin@test.com" &&
+      validatedFields.data.email !== user.email
+    ) {
+      throw new Error("This account email cannot be changed");
+    }
+
+    const { firstName, lastName, email, address, phone } = validatedFields.data;
+    const fullName = `${firstName} ${lastName}`;
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: user.id },
       data: {
         fullName,
         email,
@@ -47,7 +55,13 @@ export async function updateUserAccountInfo(data: UserFormValues) {
 export async function updateRole(userId: string, role: UserRole) {
   try {
     await requireAdmin();
-
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (user.email === "admin@test.com") {
+      throw new Error("This account cannot be modified");
+    }
     const res = await prisma.user.update({
       where: {
         id: userId,

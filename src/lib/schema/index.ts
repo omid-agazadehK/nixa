@@ -1,6 +1,6 @@
 import z from "zod";
 const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
-const phoneRegex = /^(09\d{9})?$/;
+const phoneRegex = /^\d+$/;
 export const signUpSchema = z.object({
   email: z.string().regex(emailRegex, "pls enter a vaild email address").trim(),
   password: z

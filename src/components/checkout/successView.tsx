@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { requireUserId } from "@/lib/utils";
+import { requireUser } from "@/lib/utils";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,10 +14,10 @@ import {
 } from "../ui/card";
 
 export default async function SuccessView({ orderId }: { orderId: string }) {
-  const userId = await requireUserId();
+  const user = await requireUser();
 
   const order = await prisma.order.findFirst({
-    where: { id: orderId, userId },
+    where: { id: orderId, userId: user.id },
   });
   if (!order) {
     notFound();

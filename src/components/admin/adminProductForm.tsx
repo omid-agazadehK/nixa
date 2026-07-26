@@ -57,7 +57,7 @@ export default function AdminProductForm({
       price: product?.price ?? "",
       stock: product?.stock ?? "",
       categoryId: product?.categoryId ?? "",
-      image: product?.images[0] ?? "https://picsum.photos/seed/chair1/600/600",
+      image: product?.images[0] ?? "",
       description: product?.description ?? "",
     },
   });
@@ -76,7 +76,7 @@ export default function AdminProductForm({
   return (
     <Card className="w-full max-w-3xl">
       <CardHeader>
-        <CardTitle className="md:text-3xl text-xl font-fraunces">
+        <CardTitle className="md:text-3xl text-xl font-fraunces ">
           {isEdit ? "Edit Product" : "Create New Product"}
         </CardTitle>
         <CardDescription className="sm:text-base text-xs">
@@ -193,16 +193,9 @@ export default function AdminProductForm({
                   "Create Product"
                 )}
               </Button>
-              {isEdit && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="py-5"
-                  asChild
-                >
-                  <Link href="/admin/products">Cancel</Link>
-                </Button>
-              )}
+              <Button type="button" variant="outline" className="py-5" asChild>
+                <Link href="/admin/products">Cancel</Link>
+              </Button>
             </Field>
           </FieldGroup>
         </form>

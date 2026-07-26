@@ -17,7 +17,7 @@ async function main() {
       fullName: "admin g",
       email: "admin@test.com",
       password: hashedPassword,
-      phone: "+1 212 555 0100",
+      phone: "2125550100",
       role: UserRole.ADMIN,
     },
   });
@@ -27,7 +27,7 @@ async function main() {
       fullName: "John Carter",
       email: "JohnCarter@test.com",
       password: hashedPassword,
-      phone: "+1 212 555 0148",
+      phone: "2125550148",
       address: "123 Main St, New York, NY 10001",
       role: UserRole.USER,
     },
