@@ -53,7 +53,7 @@ export default function CheckoutForm() {
             <FormInput
               control={control}
               name="fullName"
-              placeholder="omid agazdeh"
+              placeholder="name"
               label="name"
               autoComplete="name"
             />
