@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import FormInput from "../shared/FormInput";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
+import { useRouter } from "next/navigation";
 const formOptions: UseFormProps<LoginForm> = {
   resolver: zodResolver(loginSchema),
   mode: "onBlur",
@@ -33,16 +34,15 @@ export default function LoginView() {
     control,
     formState: { isSubmitting },
   } = useForm<LoginForm>(formOptions);
-
+  const router = useRouter();
   const onSubmit = async (formData: LoginForm) => {
-    try {
-    } catch {}
     const res = await logIn(formData);
     if (!res.success) {
       toast.error(res.message);
       return;
     }
-    toast.success("Login successful. Welcome back!");
+    toast.success(res.message);
+    router.replace("/")
   };
   return (
     <Card className="w-full sm:max-w-md">

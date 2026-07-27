@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 const categories = [
   {
-    name: "Chaires",
+    name: "Chairs",
     href: "/shop?category=chairs",
     image: "/chair.webp",
   },

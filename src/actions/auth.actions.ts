@@ -62,9 +62,9 @@ export const logIn = async (formData: LoginForm) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/",
+      redirect: false,
     });
-    return { success: true };
+    return { success: true, message: "Login successful" };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -77,7 +77,6 @@ export const logIn = async (formData: LoginForm) => {
           };
       }
     }
-
     throw error;
   }
 };

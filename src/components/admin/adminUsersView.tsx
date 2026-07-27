@@ -17,7 +17,6 @@ export default async function AdminUsersView() {
   });
 
   return (
-    <div className="p-6 max-w-6xl w-full mx-auto space-y-6">
       <section className="p-6 max-w-6xl w-full mx-auto space-y-6">
         <div className="mb-6">
           <h2 className="text-2xl font-bold tracking-tight">User</h2>
@@ -28,6 +27,5 @@ export default async function AdminUsersView() {
         </div>
         <DataTable columns={usersColumns} data={User} filterColumn="fullName" />
       </section>
-    </div>
   );
 }
