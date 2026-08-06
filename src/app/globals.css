@@ -22,11 +22,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -64,18 +59,15 @@
   --popover: oklch(0.99 0.002 200);
   --popover-foreground: oklch(0.2 0.02 250);
 
-  /* رنگ اصلی: سبز تیل (تیره و شیک) */
   --primary: #005b4f;
   --primary-foreground: oklch(0.98 0.005 200);
 
-  /* رنگ ثانویه: خاکستری بسیار ملایم */
   --secondary: oklch(0.94 0.008 210);
   --secondary-foreground: oklch(0.25 0.02 250);
 
   --muted: oklch(0.95 0.006 200);
   --muted-foreground: oklch(0.5 0.02 250);
 
-  /* رنگ تاکیدی: سبز روشن‌تر برای هاور و دکمه‌های فرعی */
   --accent: oklch(0.75 0.08 170);
   --accent-foreground: oklch(0.2 0.04 180);
 
