@@ -65,7 +65,6 @@ It also includes an admin dashboard for managing products, users, and orders.
 ### Authentication & Security
 
 - [Auth.js (NextAuth.js)](https://authjs.dev/)
-- [bcryptjs](https://github.com/dcodeIO/bcrypt.js)
 
 ### Backend & Database
 
